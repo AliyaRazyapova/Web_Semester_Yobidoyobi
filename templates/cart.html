@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{url_for('static', filename='registration_login.css')}}">
-    <title>Регистрация</title>
+    <title>Корзина</title>
 </head>
 <body>
     <div class="logo">
@@ -154,90 +153,6 @@
                       6.30404C15.9173 6.64574 16.339 6.91573 16.8032 7.09816C17.2675 7.28059 17.7648 7.37178 18.2661 7.36637Z" fill="#203842">
                 </path>
             </svg>
-    </div>
-    <div class="main">
-        <form method="post" class="post">
-            <div class="content">
-                <h1>Регистрация</h1>
-                <div class="field">
-                    <label class="surname">
-                        <b>Фамилия</b>
-                    </label>
-                    <input type="text" class="text_1" placeholder="введите фамилию" name="surname" value="" required>
-                </div>
-                <br>
-                <div class="field">
-                    <label class="name">
-                        <b>Имя</b>
-                    </label>
-                    <input type="text" class="text_1" placeholder="введите имя" name="name" value="" required>
-                </div>
-                <br>
-                <div class="field">
-                    <label class="patronymic">
-                        <b>Отчество (при наличии)</b>
-                    </label>
-                    <input type="text" class="text_1" placeholder="введите отчество" name="patronymic" value="" required>
-                </div>
-                <br>
-                <div class="field">
-                    <label class="birthday">
-                        <b>Дата рождения</b>
-                    </label>
-                    <input type="date" class="text_1" name="birthday" value="" required>
-                </div>
-                <br>
-                <div class="field">
-                    <label class="floor">
-                        <b>Пол</b>
-                    </label>
-                    <input type="radio" id="male" name="male" value="male">
-                    <label class="female">мужской</label>
-                    <input type="radio" id="female" name="female" value="female">
-                    <label class="female">женский</label>
-                    <input type="radio" id="xz" name="xz" value="xz">
-                    <label class="xz">не определился</label>
-                </div>
-                <br>
-                <div class="field">
-                    <label class="email">
-                        <b>Почта</b>
-                    </label>
-                    <input type="email" class="text_1" placeholder="введите почту" id="email" name="email" value="">
-                </div>
-                <br>
-                <div class="field">
-                    <label class="phone">
-                        <b>Номер телефона</b>
-                    </label>
-                    <input type="tel" class="text_1" placeholder="введите номер телефона" id="phone" name="phone" value="">
-                </div>
-                <br>
-                <div class="field">
-                    <label class="password">
-                        <b>Пароль</b>
-                    </label>
-                    <input type="password" class="text_1" placeholder="введите пароль" id="password" name="password" value="">
-                </div>
-                <br>
-                <div class="field">
-                    <label class="password_1">
-                        <b>Пароль ещё раз</b>
-                    </label>
-                    <input type="password" class="text_1" placeholder="введите пароль еще раз" id="password_1" name="password_1" value="">
-                </div>
-                <br>
-                <button type="submit" class="registration_button">
-                    Отправить
-                </button>
-            </div>
-            <br>
-            <hr>
-            <div class="sign_registration">
-                <p>Вы уже зарегистрированы?</p>
-                <a href="/login/">Войти</a>
-            </div>
-        </form>
     </div>
 </body>
 </html>

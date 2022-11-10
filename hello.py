@@ -62,5 +62,15 @@ def registration_list():
     return render_template("registration.html")
 
 
+@app.route("/wishes/")
+def wishes_list():
+    return render_template("wishes.html")
+
+
+@app.route("/cart/")
+def cart_list():
+    return render_template("cart.html")
+
+
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
