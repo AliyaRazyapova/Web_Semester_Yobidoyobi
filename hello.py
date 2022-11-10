@@ -44,21 +44,21 @@ def delete_visits():
 
 @app.route("/")
 def main_page():
-    return redirect("/main")
+    return redirect("/main/")
 
 
-@app.route("/main")
+@app.route("/main/")
 def main_list():
     return render_template("main.html")
 
 
-@app.route("/login")
+@app.route("/login/")
 def login_list():
     return render_template("login.html")
 
 
-@app.route("/registration")
-def login_list():
+@app.route("/registration/")
+def registration_list():
     return render_template("registration.html")
 
 

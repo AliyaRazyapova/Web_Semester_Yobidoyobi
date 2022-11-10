@@ -1,0 +1,20 @@
+.field {
+    clear:both;
+    text-align:left;
+    line-height:25px;
+}
+
+.text_1 {
+    float:right;
+    margin-left: 6px;
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+}
+
+.post{
+    display: block;
+    text-align: center;
+}
