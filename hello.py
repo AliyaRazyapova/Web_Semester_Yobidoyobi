@@ -72,5 +72,50 @@ def cart_list():
     return render_template("cart.html")
 
 
+@app.route("/sets/")
+def sets_list():
+    return render_template("sets.html")
+
+
+@app.route("/premium/")
+def premium_list():
+    return render_template("premium.html")
+
+
+@app.route("/rolls_and_sushi/")
+def rolls_and_sushi_list():
+    return render_template("rolls_and_sushi.html")
+
+
+@app.route("/tempura/")
+def tempura_list():
+    return render_template("tempura.html")
+
+
+@app.route("/baked/")
+def baked_list():
+    return render_template("baked.html")
+
+
+@app.route("/hot_and_salads/")
+def hot_and_salads_list():
+    return render_template("hot_and_salads.html")
+
+
+@app.route("/sauces/")
+def sauces_list():
+    return render_template("sauces.html")
+
+
+@app.route("/drinks_and_desserts/")
+def drinks_and_desserts_list():
+    return render_template("drinks_and_desserts.html")
+
+
+@app.route("/spices/")
+def spices_list():
+    return render_template("spices.html")
+
+
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
