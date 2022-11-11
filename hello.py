@@ -84,9 +84,12 @@ def cart_list():
     return render_template("cart.html")
 
 
-@app.route("/product/")
+@app.route("/product/<int:product_id>")
 def get_product(product_id):
     product = db.select(f"SELECT * FROM products WHERE id = {product_id}")
+
+    if len(product):
+        return render_template("product.html", title=product[0]['id'], product=product[0])
 
 
 @app.route("/sets/")

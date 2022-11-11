@@ -156,18 +156,6 @@
                     </path>
                 </svg>
             </div>
-            <div class="catalog_button">
-                <button class="catalog_button_1">
-                <div class="catalog_button_icon">
-                    <div class="catalog_button_icon_rect">
-                        <div class="catalog_button_icon_rect_inner"></div>
-                    </div>
-                    <div class="catalog_button_icon_top"></div>
-                    <div class="catalog_button_icon_bottom"></div>
-                </div>
-                <div class="catalog_button_name">Каталог</div>
-            </button>
-            </div>
             <div class="search_form">
                 <div data-v-01be5e58="" class="search_input_component">
                 <div class="input_line">
@@ -245,7 +233,68 @@
                 </a>
             </div>
         </div>
+    <br>
+    <div class="catalog">
+        <div class="catalog_1" dir="ltr">
+            <div class="catalog_list">
+                <div class="catalog_track">
+                    <div data-index="0" class="catalog_slide" tabindex="-1" aria-hidden="false" style="outline: none;">
+                        <div class="catalog_popular" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/main/">Популярное</a>
+                        </div>
+                    </div>
+                    <div data-index="1" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_sets" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/sets/">Наборы</a>
+                        </div>
+                    </div>
+                    <div data-index="2" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_premium" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/premium/">Премиум</a>
+                        </div>
+                    </div>
+                    <div data-index="3" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_rolls_and_sushi" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/rolls_and_sushi/">Роллы и суши</a>
+                        </div>
+                    </div>
+                    <div data-index="4" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_tempura" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/tempura/">Темпура</a>
+                        </div>
+                    </div>
+                    <div data-index="5" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_baked" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/baked/">Запечённые</a>
+                        </div>
+                    </div>
+                    <div data-index="6" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_hot_and_salads" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/hot_and_salads/">Горячее и салаты</a>
+                        </div>
+                    </div>
+                    <div data-index="7" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_sauces" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/sauces/">Соусы</a>
+                        </div>
+                    </div>
+                    <div data-index="8" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_drinks_and_desserts" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/drinks_and_desserts/">Напитки и десерты</a>
+                        </div>
+                    </div>
+                    <div data-index="9" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
+                        <div class="catalog_spices" tabindex="-1" style="width: 100%; display: inline-block;">
+                            <a class="link" draggable="false" href="/spices/">Специи</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="recommendation">
+        <h1>Популярные</h1>
         {% for product in products %}
             <div class="hnik" onclick="location.href = '{{url_for("get_product", product_id=product.id)}}'">
                 <p>{{product.name}}</p>
@@ -253,7 +302,6 @@
                 <img src="/static/imgs/{{ product.img }}">
             </div>
         {% endfor %}
-
     </div>
 </body>
 </html>
