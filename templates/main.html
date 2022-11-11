@@ -246,6 +246,13 @@
             </div>
         </div>
     <div class="recommendation">
+        {% for product in products %}
+            <div class="hnik" onclick="location.href = '{{url_for("get_product", product_id=product.id)}}'">
+                <p>{{product.name}}</p>
+                <p>{{product.category}}</p>
+                <img src="/static/imgs/{{ product.img }}">
+            </div>
+        {% endfor %}
 
     </div>
 </body>

@@ -2,6 +2,7 @@ import datetime
 
 from flask import Flask, make_response, session, request, render_template, redirect, url_for
 from db_util import Database
+# from help_function import get_sets_from_db
 
 app = Flask(__name__)
 app.secret_key = "111"
@@ -49,7 +50,18 @@ def main_page():
 
 @app.route("/main/")
 def main_list():
-    return render_template("main.html")
+    name = request.args.get("name")
+    img = request.args.get("img")
+    category = request.args.get("category")
+    products = db.select(f"SELECT * FROM products WHERE category = 'popular'")
+    context = {
+        'products': products,
+        'img': img,
+        'name': name,
+        'category': category
+    }
+
+    return render_template("main.html", **context)
 
 
 @app.route("/login/")
@@ -72,9 +84,25 @@ def cart_list():
     return render_template("cart.html")
 
 
+@app.route("/product/")
+def get_product(product_id):
+    product = db.select(f"SELECT * FROM products WHERE id = {product_id}")
+
+
 @app.route("/sets/")
 def sets_list():
-    return render_template("sets.html")
+    name = request.args.get("name")
+    img = request.args.get("img")
+    category = request.args.get("category")
+    products = db.select(f"SELECT * FROM products WHERE category = 'sets'")
+    context = {
+        'products': products,
+        'img': img,
+        'name': name,
+        'category': category
+    }
+
+    return render_template("sets.html", **context)
 
 
 @app.route("/premium/")
