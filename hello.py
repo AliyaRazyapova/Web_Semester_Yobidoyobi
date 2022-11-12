@@ -2,6 +2,7 @@ import datetime
 
 from flask import Flask, make_response, session, request, render_template, redirect, url_for
 from db_util import Database
+
 # from help_function import get_sets_from_db
 
 app = Flask(__name__)
@@ -146,6 +147,40 @@ def drinks_and_desserts_list():
 @app.route("/spices/")
 def spices_list():
     return render_template("spices.html")
+
+
+@app.route('/product_form/', methods=['GET', 'POST'])
+def render_form():
+    if request.method == 'GET':
+        return render_template('product_form.html')
+
+    id = request.form.get('id')
+    category = request.form.get('category')
+    name = request.form.get('name')
+    gramms = request.form.get('gramms')
+    price = request.form.get('price')
+    img = request.form.get('img')
+    description = request.form.get('description')
+    nutritional_value = request.form.get('nutritional_value')
+
+    products = db.insert(
+        f"INSERT INTO products (id, category, name, gramms, price, img, description, nutritional_value) VALUES ({int(id)}, '{category}', '{name}', {int(gramms)}, {int(price)}, '{img}', '{description}', '{nutritional_value}');")
+
+    response = f'"{name}" успешно добавлен'
+    context = {
+        'response': response,
+        'products': products,
+        'img': img,
+        'name': name,
+        'category': category,
+        'id': id,
+        'gramms': gramms,
+        'price': price,
+        'description': description,
+        'nutritional_value': nutritional_value
+    }
+
+    return render_template('product_form.html', **context)
 
 
 if __name__ == '__main__':

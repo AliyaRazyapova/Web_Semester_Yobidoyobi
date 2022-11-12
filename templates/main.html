@@ -294,7 +294,7 @@
     </div>
     <br>
     <div class="recommendation">
-        <h1>Популярные</h1>
+        <h1>Популярное</h1>
         {% for product in products %}
             <div class="hnik" onclick="location.href = '{{url_for("get_product", product_id=product.id)}}'">
                 <p>{{product.name}}</p>

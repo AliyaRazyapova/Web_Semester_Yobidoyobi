@@ -1,0 +1,22 @@
+{% block body %}
+    <br>
+    <div class="back" onclick="location.href = '{{ url_for("main_list") }}'">
+        <p>Все фильмы</p>
+    </div>
+    <div class="form-block">
+        <form action="" method="post">
+            <label>id</label><br><input type="number" name="id"><br>
+            <label>Категория</label><br><input type="text" name="category"><br>
+            <label>Название</label><br><input type="text" name="name"><br>
+            <label>Граммовка</label><br><input type="text" name="gramms"><br>
+            <label>Цена</label><br><input type="text" name="price"><br>
+            <label>Картинка</label><br><input type="text" name="img"><br>
+            <label>Описание</label><br><input type="text" name="description"><br>
+            <label>Пищевая ценность на 100 гр.</label><br><input type="text" name="nutritional_value"><br>
+            <button>ДОБАВИТЬ</button>
+        </form>
+    </div>
+    {% if response %}
+        <p>{{ response }}</p>
+    {% endif %}
+{% endblock %}

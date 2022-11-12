@@ -1,10 +1,16 @@
 {% block body %}
-    <br>
     <div class="back" onclick="location.href = '{{ url_for("main_list") }}'">
         <p>На главную</p>
     </div>
     <div class="film">
         {# переменные из контекста используем с двойными фигурными скобками #}
-        <p>{{ product.name }}</p>
+        <div class="product_name">{{ product.name }}</div>
+        <div>
+            <img src="/static/imgs/{{ product.img }}">
+        </div>
+        <div class="product_gramms">{{ product.gramms}}</div>
+        <div class="product_price">{{ product.price }}</div>
+        <div class="product_description">{{ product.description }}</div>
+        <div class="product_nutritional_value">{{ product.nutritional_value }}</div>
     </div>
 {% endblock %}
