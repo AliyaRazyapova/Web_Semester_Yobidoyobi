@@ -12,11 +12,11 @@
         <div class="product_description">{{ product.description }}</div>
         <div class="product_nutritional_value">{{ product.nutritional_value }}</div>
         <form action="/cart/" method="post">
-            <input class="btn" type="hidden" name="main_page" value="{{ product.id }}">
+            <input class="btn" type="hidden" name="main_page" value="{{ product.product_id }}">
             <input type="image" src="/static/imgs/kuni_li.jpg" class="btn" width="80" height="80" class=""right>
         </form>
         <form action="/wishes/" method="post">
-            <input class="btn" type="hidden" name="main_page" value="{{ product.id }}">
+            <input class="btn" type="hidden" name="main_page" value="{{ product.product_id }}">
             <input type="image" src="/static/imgs/kuni_li.jpg" class="btn" width="80" height="80" class="right">
         </form>
     </div>

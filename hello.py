@@ -2,8 +2,8 @@ import datetime
 
 from flask import Flask, make_response, session, request, render_template, redirect, url_for
 from db_util import Database
+from functools import wraps
 
-# from help_function import get_sets_from_db
 
 app = Flask(__name__)
 app.secret_key = "111"
@@ -11,37 +11,6 @@ app.secret_key = "111"
 app.permanent_session_lifetime = datetime.timedelta(days=365)
 
 db = Database()
-
-
-# метод для создания куки
-@app.route("/add_cookie")
-def add_cookie():
-    resp = make_response("Add cookie")
-    resp.set_cookie("test", "val")
-    return resp
-
-
-# метод для удаления куки
-@app.route("/delete_cookie")
-def delete_cookie():
-    resp = make_response("Delete cookie")
-    resp.set_cookie("test", "val", 0)
-
-
-# реализация визитов
-@app.route("/visits/")
-def visits():
-    visits_count = session['visits'] if 'visits' in session.keys() else 0
-    session['visits'] = visits_count + 1
-
-    return f"Количество визитов: {session['visits']}"
-
-
-# удаление данных о посещениях
-@app.route("/delete_visits/")
-def delete_visits():
-    session.pop('visits')
-    return "ok"
 
 
 @app.route("/")
@@ -65,24 +34,36 @@ def main_list():
     return render_template("main.html", **context)
 
 
-@app.route("/login/", methods=['GET', 'POST'])
+@app.route("/login/", methods=['POST', 'GET'])
 def login_list():
     error, email = '', ''
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        clients = db.select(f"SELECT * FROM users ORDER BY id")
+        clients = db.select(f"SELECT * FROM users ORDER BY user_id")
         for user in clients:
             if user['email'] == email and user['password'] == password:
-                response = f'успешно добавлен'
+                res = make_response()
+                res.set_cookie("postgres", email, 60 * 60 * 24 * 15)
+                res.headers['location'] = url_for('main_list')
+                return res, 301
         error = 'Неверные пароль или логин'
+        print('kek')
         context = {'error': error,
-                   'email': email,
-                   'response': response}
+                   'email': email}
         return render_template("login.html", **context)
     context = {'error': error,
                'email': email}
     return render_template("login.html", **context)
+
+
+@app.route("/logout/")
+def logout():
+    res = make_response("Cookie Removed")
+    email = request.cookies.get('postgres')
+    res.set_cookie('postgres', email, max_age=0)
+    res.headers['location'] = url_for('main_list')
+    return res, 301
 
 
 @app.route("/registration/", methods=['GET', 'POST'])
@@ -110,9 +91,6 @@ def registration_list():
             error = 'Дата не верна'
         if not error:
             db.insert(f"INSERT INTO users(email, name, surname, patronymic, floor, birthday, password, phone) values ('{email}', '{name}', '{surname}', '{patronymic}', '{floor}', '{birthday}', '{password}', {phone});")
-            res = make_response("")
-            res.set_cookie("user", email, 60 * 60 * 24 * 15)
-            res.headers['location'] = url_for('main_page')
             return redirect(url_for("main_list"))
         context = {'email': email,
                    'name': name,
@@ -136,18 +114,53 @@ def registration_list():
 def wishes_list():
     return render_template("wishes.html")
 
+@app.route("/backet/", methods=['POST', 'GET'])
+def backet():
+    # if not request.cookies.get('backet'):
+    #     products = []
+    #     return render_template("cart.html", products=products, mes='backet')
+    # ids = request.cookies.get('backet').split('l')
+    # products = []
+    # order = ''
+    # email = request.cookies.get('user')
+    # summ = 0
+    # for id in ids:
+    #     id = int(id)
+    #     product = db.select('id', id, 'products')
+    #     summ += product['price']
+    #     products.append(product)
+    #     order+= "{" +'id:' + f'{product["id"]}, ' + 'name:' + f'{product["name"]}, ' + 'price:' +\
+    #             f'{product["price"]}, '  +'count: 1' +"}"
+    # if not request.cookies.get('user'):
+    #     return render_template("backet.html", products=products, mes='backet', user='True', summ=summ)
+    # client = db.select('email', email, 'client')['id']
+    # if request.method == 'POST':
+    #     if not db.last_id('squads'):
+    #         id = 1
+    #     else:
+    #         id = db.last_id('squads') +1
+    #     db.insert('squads', (client, order, id, summ))
+    #     res = make_response("Cookie Removed")
+    #     res.set_cookie('backet', order, max_age=0)
+    #     res.headers['location'] = url_for('order')
+    #     return res, 302
+    return render_template("backet.html")
+    # products = products, mes='backet', summ=summ)
 
-@app.route("/cart/")
-def cart_list():
-    return render_template("cart.html")
+# @app.route("/cart/")
+# def cart_list():
+#     in_backet_status = OrderStatus.query.filter_by(STATUS_NAME = 'In backet').first()
+#     backet_orders = db.session.query(Order, Pet).filter_by( USERS_USER_ID = session['USER_ID'],\
+#                                                             ORDER_STATUS_STATUS_ID = in_backet_status.STATUS_ID).join(Pet).all()
+#     return render_template('cart.html', orders = backet_orders, session = session)
 
 
 @app.route("/product/<int:product_id>")
 def get_product(product_id):
-    product = db.select(f"SELECT * FROM products WHERE id = {product_id}")
+    product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
 
     if len(product):
-        return render_template("product.html", title=product[0]['id'], product=product[0])
+        return render_template("product.html", title=product[0]['product_id'], product=product[0])
 
 
 @app.route("/sets/")
@@ -229,7 +242,6 @@ def render_form():
         'img': img,
         'name': name,
         'category': category,
-        'id': id,
         'gramms': gramms,
         'price': price,
         'description': description,
