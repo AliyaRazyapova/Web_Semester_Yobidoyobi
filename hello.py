@@ -2,7 +2,6 @@ import datetime
 
 from flask import Flask, make_response, session, request, render_template, redirect, url_for
 from db_util import Database
-from functools import wraps
 
 
 app = Flask(__name__)
@@ -13,9 +12,23 @@ app.permanent_session_lifetime = datetime.timedelta(days=365)
 db = Database()
 
 
+@app.route("/add_cookie")
+def add_cookie():
+    resp = make_response("Add cookie")
+    resp.set_cookie("test", "val")
+    return resp
+
+
+# метод для удаления куки
+@app.route("/delete_cookie")
+def delete_cookie():
+    resp = make_response("Delete cookie")
+    resp.set_cookie("test", "val", 0)
+
+
 @app.route("/")
 def main_page():
-    return redirect(url_for("/main/"), 301)
+    return redirect(url_for("main_list"))
 
 
 @app.route("/main/")
@@ -110,9 +123,63 @@ def registration_list():
     return render_template("registration.html", **context)
 
 
+@app.route("/profil/", methods=['GET', 'POST'])
+def profil_list():
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    # print(user)
+    if request.method == 'POST':
+        return redirect(url_for('profil_redactor'), 301)
+    return render_template("profil.html", user=user)
+
+
+@app.route("/profil/redactor/", methods=['GET', 'POST'])
+def profil_redactor():
+    error = ''
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    id = user[0]['user_id']
+    print(id)
+    if request.method == 'POST':
+        surname = request.form.get('surname')
+        name = request.form.get('name')
+        patronymic = request.form.get('patronymic')
+        email = request.form.get('email')
+        floor = request.form.get('floor')
+        birthday = request.form.get('birthday')
+        phone = request.form.get('phone')
+        if '@' not in email or '.' not in email:
+            error = 'Логин не верный'
+        elif birthday >= '2012-11-16':
+            error = 'Дата не верна'
+        if not error:
+            if surname != user[0]['surname']:
+                db.insert(f"UPDATE users SET surname = '{surname}' WHERE user_id = {id};")
+            if name != user[0]['name']:
+                db.insert(f"UPDATE users SET name = '{name}' WHERE user_id = {id};")
+            if patronymic != user[0]['patronymic']:
+                db.insert(f"UPDATE users SET patronymic = '{patronymic}' WHERE user_id = {id};")
+            if email != user[0]['email']:
+                db.insert(f"UPDATE users SET email = '{email}' WHERE user_id = {id};")
+            if floor != user[0]['floor']:
+                db.insert(f"UPDATE users SET floor = '{floor}' WHERE user_id = {id};")
+            if birthday != user[0]['birthday']:
+                db.insert(f"UPDATE users SET birthday = '{birthday}' WHERE user_id = {id};")
+            if phone != user[0]['phone']:
+                db.insert(f"UPDATE users SET phone = '{phone}' WHERE user_id = {id};")
+                res = make_response("")
+                res.set_cookie("postgres", email, 60 * 60 * 24 * 15)
+                res.headers['location'] = url_for('profil_list')
+                return res, 302
+            return redirect(url_for('profil_list'), 301)
+        return render_template('profil_redactor.html', user=user, error=error)
+    return render_template("profil_redactor.html", user=user, error=error)
+
+
 @app.route("/wishes/")
 def wishes_list():
     return render_template("wishes.html")
+
 
 @app.route("/backet/", methods=['POST', 'GET'])
 def backet():

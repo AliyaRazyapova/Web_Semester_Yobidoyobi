@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="de43a97e-a7d2-4b3d-84fa-a5a760b3d843" name="Changes" comment="commit -am &quot;registration and login forms are work&quot;">
+    <list default="true" id="de43a97e-a7d2-4b3d-84fa-a5a760b3d843" name="Changes" comment="commit -am &quot;registration, login, logout working normal&quot;">
       <change afterPath="$PROJECT_DIR$/templates/profil.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/profil_redactor.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reduct_profil.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hello.py" beforeDir="false" afterPath="$PROJECT_DIR$/hello.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sets.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sets.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +79,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1668299849726</updated>
-      <workItem from="1668299853665" duration="32836000" />
+      <workItem from="1668299853665" duration="49258000" />
     </task>
     <task id="LOCAL-00001" summary="commit -am &quot;modified registration form&quot;">
       <created>1668305355537</created>
@@ -103,7 +102,21 @@
       <option name="project" value="LOCAL" />
       <updated>1668348054518</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="commit -am &quot;registration, login, logout working normal&quot;">
+      <created>1668363661903</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1668363661903</updated>
+    </task>
+    <task id="LOCAL-00005" summary="commit -am &quot;registration, login, logout working normal&quot;">
+      <created>1668363674027</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668363674027</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,9 +137,10 @@
     <MESSAGE value="commit -am &quot;modified registration form&quot;" />
     <MESSAGE value="commit -am &quot;add login form&quot;" />
     <MESSAGE value="commit -am &quot;registration and login forms are work&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit -am &quot;registration and login forms are work&quot;" />
+    <MESSAGE value="commit -am &quot;registration, login, logout working normal&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit -am &quot;registration, login, logout working normal&quot;" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Web_Semester_Yobidoyobi$Web_Semester_Yobidoyobi.coverage" NAME="Web_Semester_Yobidoyobi Coverage Results" MODIFIED="1668340839214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Web_Semester_Yobidoyobi$Web_Semester_Yobidoyobi.coverage" NAME="Web_Semester_Yobidoyobi Coverage Results" MODIFIED="1668370617039" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
