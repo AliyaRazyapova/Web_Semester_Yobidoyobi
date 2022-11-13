@@ -29,7 +29,7 @@ def delete_cookie():
 
 
 # реализация визитов
-@app.route("/visits")
+@app.route("/visits/")
 def visits():
     visits_count = session['visits'] if 'visits' in session.keys() else 0
     session['visits'] = visits_count + 1
@@ -38,7 +38,7 @@ def visits():
 
 
 # удаление данных о посещениях
-@app.route("/delete_visits")
+@app.route("/delete_visits/")
 def delete_visits():
     session.pop('visits')
     return "ok"
@@ -46,7 +46,7 @@ def delete_visits():
 
 @app.route("/")
 def main_page():
-    return redirect("/main/")
+    return redirect(url_for("/main/"), 301)
 
 
 @app.route("/main/")
@@ -65,7 +65,7 @@ def main_list():
     return render_template("main.html", **context)
 
 
-@app.route("/main/login/", methods=['GET', 'POST'])
+@app.route("/login/", methods=['GET', 'POST'])
 def login_list():
     error, email = '', ''
     if request.method == 'POST':
@@ -99,40 +99,36 @@ def registration_list():
         floor = request.form.get('floor')
         password = request.form.get('password')
         repeat_password = request.form.get('repeat_password')
-        id = request.form.get('id')
-        # emails = db.select_something('client', 'email')
-        # if email in emails:
-        #     error = 'Пользователь с таким логином уже зарегестрирован'
-        # if password != repeat_password:
-        #     error = 'Пароли не совпадают'
-        # elif ('@' not in email or '.' not in email) and email != 'admin':
-        #     error = 'Логин не верный'
-        # elif birthday >= '2020-12-31':
-        #     error = 'Дата не верна'
+        emails = db.select(f"SELECT email FROM users;")
+        if email in emails:
+            error = 'Пользователь с таким логином уже зарегестрирован'
+        if password != repeat_password:
+            error = f'Пароли не совпадают'
+        elif '@' not in email or '.' not in email:
+            error = 'Логин не верный'
+        elif birthday >= '2012-11-16':
+            error = 'Дата не верна'
         if not error:
-            db.insert(f"INSERT INTO users(id, email, name, surname, patronymic, floor, birthday, password, phone) values ({int(id)}, '{email}', '{name}', '{surname}', '{patronymic}', '{floor}', '{birthday}', '{password}', {phone});")
-            res = make_response("main.html")
+            db.insert(f"INSERT INTO users(email, name, surname, patronymic, floor, birthday, password, phone) values ('{email}', '{name}', '{surname}', '{patronymic}', '{floor}', '{birthday}', '{password}', {phone});")
+            res = make_response("")
             res.set_cookie("user", email, 60 * 60 * 24 * 15)
             res.headers['location'] = url_for('main_page')
-            response = f'"{name}" успешно добавлен'
-        context = {'error': error,
-                   'id': id,
-                   'email': email,
+            return redirect(url_for("main_list"))
+        context = {'email': email,
                    'name': name,
                    'patronymic': patronymic,
                    'floor': floor,
                    'surname': surname,
                    'birthday': birthday,
-                   'phone': phone,
-                   'response': response}
+                   'phone': phone}
         return render_template("registration.html", **context)
     context = {'error': error,
-                   'email': email,
-                   'name': name,
-                   'patronymic': patronymic,
-                   'surname': surname,
-                   'birthday': birthday,
-                   'phone': phone}
+                'email': email,
+                'name': name,
+                'patronymic': patronymic,
+                'surname': surname,
+                'birthday': birthday,
+                'phone': phone}
     return render_template("registration.html", **context)
 
 
@@ -215,7 +211,6 @@ def render_form():
     if request.method == 'GET':
         return render_template('product_form.html')
 
-    id = request.form.get('id')
     category = request.form.get('category')
     name = request.form.get('name')
     gramms = request.form.get('gramms')
@@ -225,7 +220,7 @@ def render_form():
     nutritional_value = request.form.get('nutritional_value')
 
     products = db.insert(
-        f"INSERT INTO products (id, category, name, gramms, price, img, description, nutritional_value) VALUES ({int(id)}, '{category}', '{name}', {int(gramms)}, {int(price)}, '{img}', '{description}', '{nutritional_value}');")
+        f"INSERT INTO products (category, name, gramms, price, img, description, nutritional_value) VALUES ({category}', '{name}', {int(gramms)}, {int(price)}, '{img}', '{description}', '{nutritional_value}');")
 
     response = f'"{name}" успешно добавлен'
     context = {

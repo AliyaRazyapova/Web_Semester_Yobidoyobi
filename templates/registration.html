@@ -159,12 +159,12 @@
         <form method="post" class="post">
             <div class="content">
                 <h1>Регистрация</h1>
-                <div class="field">
-                    <label class="id">
-                        <b>ID</b>
-                    </label>
-                    <input type="int" class="text_1" placeholder="введите id" name="id" value="" required>
-                </div>
+{#                <div class="field">#}
+{#                    <label class="id">#}
+{#                        <b>ID</b>#}
+{#                    </label>#}
+{#                    <input type="int" class="text_1" placeholder="введите id" name="id" value="" required>#}
+{#                </div>#}
                 <div class="field">
                     <label class="surname">
                         <b>Фамилия</b>
@@ -194,14 +194,14 @@
                 </div>
                 <br>
                 <div class="field">
-                    <label class="floor">
+                    <label class="floor_1">
                         <b>Пол</b>
                     </label>
-                    <input type="radio" id="male" name="male" value="male">
+                    <input type="radio" name="floor" value="male">
                     <label class="female">мужской</label>
-                    <input type="radio" id="female" name="female" value="female">
+                    <input type="radio" name="floor" value="female">
                     <label class="female">женский</label>
-                    <input type="radio" id="xz" name="xz" value="xz">
+                    <input type="radio" name="floor" value="xz">
                     <label class="xz">не определился</label>
                 </div>
                 <br>
@@ -227,10 +227,10 @@
                 </div>
                 <br>
                 <div class="field">
-                    <label class="password_1">
+                    <label class="repeat_password">
                         <b>Пароль ещё раз</b>
                     </label>
-                    <input type="password" class="text_1" placeholder="введите пароль еще раз" id="password_1" name="password_1" value="">
+                    <input type="password" class="text_1" placeholder="введите пароль еще раз" id="repeat_password" name="repeat_password" value="">
                 </div>
                 <br>
                 <button type="submit" class="registration_button">
@@ -245,8 +245,8 @@
             </div>
         </form>
     </div>
-    {% if response %}
-        <p>{{ response }}</p>
+    {% if error %}
+        <p>{{ error }}</p>
     {% endif %}
 </body>
 </html>
