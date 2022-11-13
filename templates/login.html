@@ -173,6 +173,9 @@
                     </label>
                     <input type="password" class="text_1" placeholder="введите пароль" id="password" name="password" value="">
                 </div>
+                <button type="submit" class="login_button">
+                    Вход
+                </button>
             </div>
             <br>
             <hr>
@@ -182,5 +185,8 @@
             </div>
         </form>
     </div>
+{% if response %}
+        <p>{{ response }}</p>
+    {% endif %}
 </body>
 </html>

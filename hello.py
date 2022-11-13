@@ -65,9 +65,24 @@ def main_list():
     return render_template("main.html", **context)
 
 
-@app.route("/login/")
+@app.route("/main/login/", methods=['GET', 'POST'])
 def login_list():
-    return render_template("login.html")
+    error, email = '', ''
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        clients = db.select(f"SELECT * FROM users ORDER BY id")
+        for user in clients:
+            if user['email'] == email and user['password'] == password:
+                response = f'успешно добавлен'
+        error = 'Неверные пароль или логин'
+        context = {'error': error,
+                   'email': email,
+                   'response': response}
+        return render_template("login.html", **context)
+    context = {'error': error,
+               'email': email}
+    return render_template("login.html", **context)
 
 
 @app.route("/registration/", methods=['GET', 'POST'])
@@ -96,10 +111,9 @@ def registration_list():
         #     error = 'Дата не верна'
         if not error:
             db.insert(f"INSERT INTO users(id, email, name, surname, patronymic, floor, birthday, password, phone) values ({int(id)}, '{email}', '{name}', '{surname}', '{patronymic}', '{floor}', '{birthday}', '{password}', {phone});")
-            # res = make_response("")
-            # res.set_cookie("user", email, 60 * 60 * 24 * 15)
-            # res.headers['location'] = url_for('main_list')
-            # return url_for('main'), 302
+            res = make_response("main.html")
+            res.set_cookie("user", email, 60 * 60 * 24 * 15)
+            res.headers['location'] = url_for('main_page')
             response = f'"{name}" успешно добавлен'
         context = {'error': error,
                    'id': id,
