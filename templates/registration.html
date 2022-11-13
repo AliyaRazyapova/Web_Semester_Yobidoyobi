@@ -160,6 +160,12 @@
             <div class="content">
                 <h1>Регистрация</h1>
                 <div class="field">
+                    <label class="id">
+                        <b>Фамилия</b>
+                    </label>
+                    <input type="int" class="text_1" placeholder="введите id" name="id" value="" required>
+                </div>
+                <div class="field">
                     <label class="surname">
                         <b>Фамилия</b>
                     </label>
@@ -239,5 +245,8 @@
             </div>
         </form>
     </div>
+    {% if response %}
+        <p>{{ response }}</p>
+    {% endif %}
 </body>
 </html>

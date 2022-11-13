@@ -70,9 +70,56 @@ def login_list():
     return render_template("login.html")
 
 
-@app.route("/registration/")
+@app.route("/registration/", methods=['GET', 'POST'])
 def registration_list():
-    return render_template("registration.html")
+    error = ''
+    email, name, surname, patronymic, birthday, phone = '', '', '', '', '', ''
+    if request.method == 'POST':
+        email = request.form.get('email')
+        name = request.form.get('name')
+        surname = request.form.get('surname')
+        patronymic = request.form.get('patronymic')
+        birthday = request.form.get('birthday')
+        phone = request.form.get('phone')
+        floor = request.form.get('floor')
+        password = request.form.get('password')
+        repeat_password = request.form.get('repeat_password')
+        id = request.form.get('id')
+        # emails = db.select_something('client', 'email')
+        # if email in emails:
+        #     error = 'Пользователь с таким логином уже зарегестрирован'
+        # if password != repeat_password:
+        #     error = 'Пароли не совпадают'
+        # elif ('@' not in email or '.' not in email) and email != 'admin':
+        #     error = 'Логин не верный'
+        # elif birthday >= '2020-12-31':
+        #     error = 'Дата не верна'
+        if not error:
+            db.insert(f"INSERT INTO users(id, email, name, surname, patronymic, floor, birthday, password, phone) values ({int(id)}, '{email}', '{name}', '{surname}', '{patronymic}', '{floor}', '{birthday}', '{password}', {phone});")
+            # res = make_response("")
+            # res.set_cookie("user", email, 60 * 60 * 24 * 15)
+            # res.headers['location'] = url_for('main_list')
+            # return url_for('main'), 302
+            response = f'"{name}" успешно добавлен'
+        context = {'error': error,
+                   'id': id,
+                   'email': email,
+                   'name': name,
+                   'patronymic': patronymic,
+                   'floor': floor,
+                   'surname': surname,
+                   'birthday': birthday,
+                   'phone': phone,
+                   'response': response}
+        return render_template("registration.html", **context)
+    context = {'error': error,
+                   'email': email,
+                   'name': name,
+                   'patronymic': patronymic,
+                   'surname': surname,
+                   'birthday': birthday,
+                   'phone': phone}
+    return render_template("registration.html", **context)
 
 
 @app.route("/wishes/")
