@@ -3,14 +3,12 @@
         <p>На главную</p>
     </div>
     <div class="product">
-{#    {% for i in cart %}#}
         {% for product in products %}
             <div class="cart_name">{{ product.name }}</div>
             <div>
                 <img src="/static/imgs/{{ product.img }}">
             </div>
-        <div class="product_price">{{ product.price }}</div>
+            <div class="product_price">{{ product.price }}</div>
         {% endfor %}
-{#    {% endfor %}#}
     </div>
 {% endblock %}
