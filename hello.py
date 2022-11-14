@@ -12,20 +12,6 @@ app.permanent_session_lifetime = datetime.timedelta(days=365)
 db = Database()
 
 
-@app.route("/add_cookie")
-def add_cookie():
-    resp = make_response("Add cookie")
-    resp.set_cookie("test", "val")
-    return resp
-
-
-# метод для удаления куки
-@app.route("/delete_cookie")
-def delete_cookie():
-    resp = make_response("Delete cookie")
-    resp.set_cookie("test", "val", 0)
-
-
 @app.route("/")
 def main_page():
     return redirect(url_for("main_list"))
@@ -59,9 +45,8 @@ def login_list():
                 res = make_response()
                 res.set_cookie("postgres", email, 60 * 60 * 24 * 15)
                 res.headers['location'] = url_for('main_list')
-                return res, 301
-        error = 'Неверные пароль или логин'
-        print('kek')
+                return res, 302
+        error = 'Неверные логин или пароль'
         context = {'error': error,
                    'email': email}
         return render_template("login.html", **context)
@@ -72,11 +57,11 @@ def login_list():
 
 @app.route("/logout/")
 def logout():
-    res = make_response("Cookie Removed")
+    res = make_response("")
     email = request.cookies.get('postgres')
     res.set_cookie('postgres', email, max_age=0)
     res.headers['location'] = url_for('main_list')
-    return res, 301
+    return res, 302
 
 
 @app.route("/registration/", methods=['GET', 'POST'])
@@ -127,7 +112,6 @@ def registration_list():
 def profil_list():
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-    # print(user)
     if request.method == 'POST':
         return redirect(url_for('profil_redactor'), 301)
     return render_template("profil.html", user=user)
@@ -170,7 +154,7 @@ def profil_redactor():
                 res = make_response("")
                 res.set_cookie("postgres", email, 60 * 60 * 24 * 15)
                 res.headers['location'] = url_for('profil_list')
-                return res, 302
+                return res, 301
             return redirect(url_for('profil_list'), 301)
         return render_template('profil_redactor.html', user=user, error=error)
     return render_template("profil_redactor.html", user=user, error=error)
@@ -178,48 +162,30 @@ def profil_redactor():
 
 @app.route("/wishes/")
 def wishes_list():
+    # if request.method == 'POST':
+        # email_1 = request.cookies.get('postgres')
+        # user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+        # id = user[0]['user_id']
+        # print(email_1)
+        # print(user)
+        # print(id)
     return render_template("wishes.html")
 
 
-@app.route("/backet/", methods=['POST', 'GET'])
-def backet():
-    # if not request.cookies.get('backet'):
-    #     products = []
-    #     return render_template("cart.html", products=products, mes='backet')
-    # ids = request.cookies.get('backet').split('l')
-    # products = []
-    # order = ''
-    # email = request.cookies.get('user')
-    # summ = 0
-    # for id in ids:
-    #     id = int(id)
-    #     product = db.select('id', id, 'products')
-    #     summ += product['price']
-    #     products.append(product)
-    #     order+= "{" +'id:' + f'{product["id"]}, ' + 'name:' + f'{product["name"]}, ' + 'price:' +\
-    #             f'{product["price"]}, '  +'count: 1' +"}"
-    # if not request.cookies.get('user'):
-    #     return render_template("backet.html", products=products, mes='backet', user='True', summ=summ)
-    # client = db.select('email', email, 'client')['id']
-    # if request.method == 'POST':
-    #     if not db.last_id('squads'):
-    #         id = 1
-    #     else:
-    #         id = db.last_id('squads') +1
-    #     db.insert('squads', (client, order, id, summ))
-    #     res = make_response("Cookie Removed")
-    #     res.set_cookie('backet', order, max_age=0)
-    #     res.headers['location'] = url_for('order')
-    #     return res, 302
-    return render_template("backet.html")
-    # products = products, mes='backet', summ=summ)
+@app.route("/cart/", methods=['POST', 'GET'])
+def cart_list():
+    return render_template("cart.html")
 
-# @app.route("/cart/")
-# def cart_list():
-#     in_backet_status = OrderStatus.query.filter_by(STATUS_NAME = 'In backet').first()
-#     backet_orders = db.session.query(Order, Pet).filter_by( USERS_USER_ID = session['USER_ID'],\
-#                                                             ORDER_STATUS_STATUS_ID = in_backet_status.STATUS_ID).join(Pet).all()
-#     return render_template('cart.html', orders = backet_orders, session = session)
+
+@app.route("/product/<int:product_id>/wishes_add/")
+def get_product_wishes_add(product_id):
+    product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    product_1 = product[0]['product_id']
+    db.insert(f"INSERT INTO wishes(user_id, product_id) values ('{user_1}', '{product_1}');")
+    return redirect(url_for("get_product", product_id=product[0]['product_id']), 301)
 
 
 @app.route("/product/<int:product_id>")
@@ -228,7 +194,6 @@ def get_product(product_id):
 
     if len(product):
         return render_template("product.html", title=product[0]['product_id'], product=product[0])
-
 
 @app.route("/sets/")
 def sets_list():
