@@ -162,19 +162,17 @@ def profil_redactor():
 
 @app.route("/wishes/")
 def wishes_list():
-    # if request.method == 'POST':
-        # email_1 = request.cookies.get('postgres')
-        # user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-        # id = user[0]['user_id']
-        # print(email_1)
-        # print(user)
-        # print(id)
     return render_template("wishes.html")
 
 
 @app.route("/cart/", methods=['POST', 'GET'])
 def cart_list():
-    return render_template("cart.html")
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    products = db.select(f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+    if products:
+        return render_template("cart.html", products=products)
 
 
 @app.route("/product/<int:product_id>/wishes_add/")
@@ -202,7 +200,7 @@ def get_product_cart_add(product_id):
 @app.route("/product/<int:product_id>")
 def get_product(product_id):
     product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
-
+    print(product)
     if len(product):
         return render_template("product.html", title=product[0]['product_id'], product=product[0])
 

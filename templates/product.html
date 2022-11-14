@@ -11,25 +11,11 @@
         <div class="product_price">{{ product.price }}</div>
         <div class="product_description">{{ product.description }}</div>
         <div class="product_nutritional_value">{{ product.nutritional_value }}</div>
-{#        <form action="/cart/" method="post">#}
-{#        <form method="post">#}
-{#                <form action="{{ url_for("get_product_wishes", product_id = product.product_id) }}" method="post">#}
-        <div class="back" onclick="location.href = '{{ url_for("get_product_wishes_add", product_id = product.product_id) }}'">
+        <div class="wishes" onclick="location.href = '{{ url_for("get_product_wishes_add", product_id = product.product_id) }}'">
             <p>Избранное</p>
         </div>
         <div class="back" onclick="location.href = '{{ url_for("get_product_cart_add", product_id = product.product_id) }}'">
             <p>Корзина</p>
         </div>
-{#            <button onclick="location.href = '{{ url_for("get_product_wishes", product_id = product.product_id) }}'">product</button>#}
-{#            <input class="btn" type="hidden" name="index" value="{{ product.product_id }}">#}
-{#            <input type="image" src="/static/imgs/kuni_li.jpg" class="btn" width="80" height="80" class=""right>#}
-{#        </form>#}
-{#        <form action="/wishes/" method="post">#}
-{#            <input type="submit" name="product" value="product">#}
-{#            <input class="btn" type="hidden" name="index" value="{{ product.product_id }}">#}
-{#            <input type="image" src="/static/imgs/wishes.png" class="btn" width="80" height="80" class="right">#}
-{#        </form>#}
-{#        <a href="{{ url_for('add_to_favourite', product_id=product[6]) }}?url_from={{ url_for('product', id=product[6]) }}"#}
-{#                   class="btn btn-outline-danger">Add to favourite</a>#}
     </div>
 {% endblock %}
