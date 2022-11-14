@@ -188,6 +188,21 @@ def get_product_wishes_add(product_id):
     return redirect(url_for("get_product", product_id=product[0]['product_id']), 301)
 
 
+@app.route("/product/<int:product_id>/cart_add/")
+def get_product_cart_add(product_id):
+    print('kek')
+    product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    product_1 = product[0]['product_id']
+    print('yes')
+    db.insert(f"INSERT INTO cart(user_id, product_id) values ('{user_1}', '{product_1}');")
+    return redirect(url_for("get_product", product_id=product[0]['product_id']), 301)
+    # res = make_response("")
+    # return res, 31
+
+
 @app.route("/product/<int:product_id>")
 def get_product(product_id):
     product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
