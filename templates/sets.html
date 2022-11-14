@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/products.css">
     <title>Наборы</title>
 </head>
 <body>
-    <div>
+    <div class="products">
         {% for product in products %}
-            <div class="hnik" onclick="location.href = '{{url_for("get_product", product_id=product.product_id)}}'">
-                <p>{{product.name}}</p>
-                <p>{{product.category}}</p>
+            <div class="product" onclick="location.href = '{{url_for("get_product", product_id=product.product_id)}}'">
                 <img src="/static/imgs/{{ product.img }}">
+                <div class="name">{{product.name}}</div>
+                <div class="content">
+                    <div class="gramms">{{ product.gramms }} гр.</div>
+                    <div class="price_outside">
+                        <div class="price">{{ product.price }} ₽</div>
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </div>

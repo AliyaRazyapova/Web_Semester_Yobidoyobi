@@ -162,8 +162,13 @@ def profil_redactor():
 
 @app.route("/wishes/")
 def wishes_list():
-    return render_template("wishes.html")
-
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    products = db.select(
+        f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM wishes GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+    if products:
+        return render_template("wishes.html", products=products)
 
 @app.route("/cart/", methods=['POST', 'GET'])
 def cart_list():
