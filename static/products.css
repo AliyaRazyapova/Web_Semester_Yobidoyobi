@@ -40,8 +40,16 @@
     font: 700 18px/20px "Museo Sans Cyrl 700",sans-serif;
     color: #203842;
 }
-img{
+.img{
     height: 194px;
     width: 265px;
+}
+
+.title, .logo{
+    margin-left: 10px;
+}
+
+.store_action_buttons{
+    margin-right: 10px;
 }
 

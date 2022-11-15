@@ -19,18 +19,13 @@ def main_page():
 
 @app.route("/main/")
 def main_list():
-    name = request.args.get("name")
-    img = request.args.get("img")
-    category = request.args.get("category")
+    title = 'Ёбидоёби'
+    error = 'Товара данной категории нет'
     products = db.select(f"SELECT * FROM products WHERE category = 'popular'")
-    context = {
-        'products': products,
-        'img': img,
-        'name': name,
-        'category': category
-    }
 
-    return render_template("main.html", **context)
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("main.html", products=products, title=title)
 
 
 @app.route("/login/", methods=['POST', 'GET'])
@@ -211,58 +206,101 @@ def get_product(product_id):
 
 @app.route("/sets/")
 def sets_list():
-    name = request.args.get("name")
-    img = request.args.get("img")
-    category = request.args.get("category")
-    products = db.select(f"SELECT * FROM products WHERE category = 'sets'")
-    context = {
-        'products': products,
-        'img': img,
-        'name': name,
-        'category': category
-    }
+    error = 'Товара данной категории нет'
+    category = 'sets'
+    title = 'Наборы'
+    products = db.get_category_page('products', category, 'category')
 
-    return render_template("sets.html", **context)
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route("/premium/")
 def premium_list():
-    return render_template("premium.html")
+    error = 'Товара данной категории нет'
+    category = 'premium'
+    products = db.get_category_page('products', category, 'category')
 
+    if len(products)==0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products)
 
 @app.route("/rolls_and_sushi/")
 def rolls_and_sushi_list():
-    return render_template("rolls_and_sushi.html")
+    error = 'Товара данной категории нет'
+    category = 'rolls_and_sushi'
+    products = db.get_category_page('products', category, 'category')
+
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products)
 
 
 @app.route("/tempura/")
 def tempura_list():
-    return render_template("tempura.html")
+    error = 'Товара данной категории нет'
+    category = 'tempura'
+    products = db.get_category_page('products', category, 'category')
+
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products)
 
 
 @app.route("/baked/")
 def baked_list():
-    return render_template("baked.html")
+    error = 'Товара данной категории нет'
+    category = 'baked'
+    products = db.get_category_page('products', category, 'category')
+
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products)
 
 
 @app.route("/hot_and_salads/")
 def hot_and_salads_list():
-    return render_template("hot_and_salads.html")
+    error = 'Товара данной категории нет'
+    category = 'hot_and_salads'
+    products = db.get_category_page('products', category, 'category')
+
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products)
 
 
 @app.route("/sauces/")
 def sauces_list():
-    return render_template("sauces.html")
+    error = 'Товара данной категории нет'
+    category = 'sauces'
+    products = db.get_category_page('products', category, 'category')
+
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products)
 
 
 @app.route("/drinks_and_desserts/")
 def drinks_and_desserts_list():
-    return render_template("drinks_and_desserts.html")
+    error = 'Товара данной категории нет'
+    category = 'drinks_and_desserts'
+    products = db.get_category_page('products', category, 'category')
+
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products)
 
 
 @app.route("/spices/")
 def spices_list():
-    return render_template("spices.html")
+    error = 'Товара данной категории нет'
+    category = 'spices'
+    products = db.get_category_page('products', category, 'category')
+
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("base_products.html", products=products)
 
 
 @app.route('/product_form/', methods=['GET', 'POST'])

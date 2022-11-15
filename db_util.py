@@ -22,6 +22,13 @@ class Database:
         self.cur.execute(query)
         self.con.commit()
 
+    def get_category_page(self, table, category, parametr):
+        self.cur.execute(f"SELECT * FROM {table} WHERE {parametr} = '{category}';")
+        data = self.prepare_data(self.cur.fetchall())
+        if len(data) == 1:
+            data = data[0]
+        return data
+
     def prepare_data(self, data):
         products = []
         if len(data):
