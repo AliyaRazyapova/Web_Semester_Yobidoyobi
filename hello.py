@@ -157,6 +157,7 @@ def profil_redactor():
 
 @app.route("/wishes/")
 def wishes_list():
+    error = 'Корзина пуста'
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
     user_1 = user[0]['user_id']
@@ -164,15 +165,22 @@ def wishes_list():
         f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM wishes GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
     if products:
         return render_template("wishes.html", products=products)
+    else:
+        return render_template('error.html', error=error)
+
 
 @app.route("/cart/", methods=['POST', 'GET'])
 def cart_list():
+    error = 'Корзина пуста'
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
     user_1 = user[0]['user_id']
-    products = db.select(f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+    products = db.select(
+        f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
     if products:
-        return render_template("cart.html", products=products)
+        return render_template("wishes.html", products=products)
+    else:
+        return render_template('error.html', error=error)
 
 
 @app.route("/product/<int:product_id>/wishes_add/")

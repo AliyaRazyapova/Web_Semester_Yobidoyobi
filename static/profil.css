@@ -1,0 +1,11 @@
+.kek{
+    display: flex;
+    flex-direction: row;
+    /*margin-left: 50%;*/
+    flex-grow: 1;
+}
+
+.text_1{
+    float: right;
+    display: flex;
+}

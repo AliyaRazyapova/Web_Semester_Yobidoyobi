@@ -22,19 +22,6 @@
     padding: 0 12px;
 }
 
-.price{
-    display: flex;
-    border: solid;
-    border-color: #f52341;
-    border-radius: 7%;
-    width: 84px;
-    height: 32px;
-    justify-content: center;
-    align-items: center;
-    font: 700 14px/16px "Museo Sans Cyrl 700",sans-serif;
-    color: #f52341;
-}
-
 .name{
     margin-left: 20px;
     font: 700 18px/20px "Museo Sans Cyrl 700",sans-serif;
@@ -53,3 +40,90 @@
     margin-right: 10px;
 }
 
+.product_2 {
+    display: flex;
+    flex-direction: row;
+    padding-right: 400px;
+
+}
+
+.product_content{
+    padding-top: 60px;
+    margin-left: 60px;
+}
+
+.button_product{
+    display: flex;
+    flex-direction: row;
+}
+
+.cart{
+    padding-left: 50%;
+    display: flex;
+}
+
+.cart_1{
+    display: flex;
+    border: solid;
+    border-color: #f52341;
+    border-radius: 7%;
+    width: 104px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    font: 700 14px/16px "Museo Sans Cyrl 700",sans-serif;
+    color: #f52341;
+}
+
+.wishes, .price, .cart_3, .cart_1, .cart_4{
+    display: flex;
+    border: solid;
+    border-color: #f52341;
+    border-radius: 7%;
+    width: 120px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    font: 700 14px/16px "Museo Sans Cyrl 700",sans-serif;
+    color: #f52341;
+}
+
+.pr{
+    display: flex;
+    flex-direction: row;
+}
+
+.value_pr{
+    padding-left: 20px;
+    font: 16px "Museo Sans Cyrl 700",sans-serif;
+}
+
+.title_pr{
+    font: 700 18px "Museo Sans Cyrl 700",sans-serif;
+}
+
+.cart_3, .cart_4{
+    color: #203842;
+    text-align: center;
+}
+
+.cart_2{
+    padding-top: 60px;
+}
+
+.cart_5{
+    padding-top: 10px;
+}
+
+.product_1_2{
+    display: flex;
+    flex-direction: row;
+}
+
+.product_content{
+    width: 500px;
+}
+
+.product{
+    display: block;
+}

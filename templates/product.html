@@ -1,21 +1,46 @@
+{% extends 'base.html' %}
 {% block body %}
-    <div class="back" onclick="location.href = '{{ url_for("main_list") }}'">
-        <p>На главную</p>
-    </div>
-    <div class="product">
-        <div class="product_name">{{ product.name }}</div>
-        <div>
-            <img src="/static/imgs/{{ product.img }}">
+    <div class="product_2">
+        <div class="first_n_i">
+            <div class="name">
+                <h1>{{ product.name }}</h1>
+            </div>
+            <div class="img_pr">
+                <img src="/static/imgs/{{ product.img }}">
+            </div>
         </div>
-        <div class="product_gramms">{{ product.gramms}}</div>
-        <div class="product_price">{{ product.price }}</div>
-        <div class="product_description">{{ product.description }}</div>
-        <div class="product_nutritional_value">{{ product.nutritional_value }}</div>
-        <div class="wishes" onclick="location.href = '{{ url_for("get_product_wishes_add", product_id = product.product_id) }}'">
-            <p>Избранное</p>
-        </div>
-        <div class="back" onclick="location.href = '{{ url_for("get_product_cart_add", product_id = product.product_id) }}'">
-            <p>Корзина</p>
+        <div class="product_content">
+            <div class="pr">
+                <div class="title_pr">Вес:</div>
+                <div class="value_pr"> {{ product.gramms}} гр.</div>
+            </div>
+            <br>
+            <div class="pr">
+                <div class="title_pr">Цена:</div>
+                <div class="value_pr">{{ product.price }} ₽</div>
+            </div>
+            <br>
+            <div class="pr_1">
+                <div class="title_pr">Состав:</div>
+                <div class="value_pr">{{ product.description }}</div>
+            </div>
+            <br>
+            <div class="pr_1">
+                <div class="title_pr">Пищевая ценность на 100 гр.</div>
+                <div class="value_pr">{{ product.nutritional_value }}</div>
+            </div>
+            <br>
+            <br>
+            <div class="button_product">
+                <div class="wishes" onclick="location.href = '{{ url_for("get_product_wishes_add", product_id = product.product_id) }}'">
+                    <p> Избранное </p>
+                </div>
+                <div class="cart">
+                    <div class="cart_1" onclick="location.href = '{{ url_for("get_product_cart_add", product_id = product.product_id) }}'">
+                        <p>Корзина</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

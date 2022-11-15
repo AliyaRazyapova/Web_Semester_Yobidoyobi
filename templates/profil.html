@@ -2,21 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/static/profil.css">
+    <title>Личный кабинет</title>
 </head>
 <body>
-    <div class="content">
-        <p class="trumb">
-            <p>Фамилия: {{ user[0].surname }}</p>
-            <p>Имя: {{ user[0].name }}</p>
-            <p>Отчество: {{ user[0].patronymic }}</p>
-            <p>Email: {{ user[0].email }}</p>
-            <p>Пол: {{ user[0].floor }}</p>
-            <p>Дата рождения: {{ user[0].birthday }}</p>
-            <p>Номер телефона: {{ user[0].phone }}</p>
-        </p>
-    </div>
-    <form method="post">
+    <form method="post" class="post">
+        <div class="main">
+            <div class="content">
+                <div class="kek">
+                    <div class="field">Фамилия:</div>
+                    <div class="text_1">{{ user[0].surname }}</div>
+                </div>
+                <br>
+                <div class="kek">
+                    <div class="field">Имя:</div>
+                    <div class="text_1">{{ user[0].name }}</div>
+                </div>
+                <br>
+                <div class="kek">
+                    <div class="field">Отчество: </div>
+                    <div class="text_1">{{ user[0].patronymic }}</div>
+                </div>
+                <br>
+                <div class="kek">
+                    <div class="field">Дата рождения: </div>
+                    <div class="text_1">{{ user[0].birthday }}</div>
+                </div>
+                <br>
+                <div class="kek">
+                    <div class="field">Email: </div>
+                    <div class="text_1">{{ user[0].email }}</div>
+                </div>
+                <br>
+                <div class="kek">
+                    <div class="field">Пол:</div>
+                    <div class="text_1">{{ user[0].floor }}</div>
+                </div>
+                <br>
+                <div class="kek">
+                    <div class="field">Номер телефона: </div>
+                    <div class="text_1">{{ user[0].phone }}</div>
+                </div>
+            </div>
+        </div>
         <button type="submit" class="button_redactor_profil">
             Редактировать профиль
         </button>
