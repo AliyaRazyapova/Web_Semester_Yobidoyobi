@@ -131,7 +131,6 @@ def profil_redactor():
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
     id = user[0]['user_id']
-    print(id)
     if request.method == 'POST':
         surname = request.form.get('surname')
         name = request.form.get('name')
@@ -231,7 +230,6 @@ def message_list():
             if int(orders[i]['order_number']) > order_number:
                 order_number = int(orders[i]['order_number'])
         order_number += 1
-        print(order_number)
     for i in range(len(products)):
         product_1 = products[i]['product_id']
         amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0][

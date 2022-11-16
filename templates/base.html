@@ -162,7 +162,7 @@
                 <h1>Доставка суши и роллов</h1>
             </div>
             <div class="store_action_buttons">
-                {% if not request.cookies.get('postgres') or request.cookies.get('admin') %}
+                {% if not request.cookies.get('postgres')%}
                     <a href="/login/" class="action_button_exit">
                         <i class="action_button_auth_text">
                             Войти
