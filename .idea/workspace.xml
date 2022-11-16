@@ -2,23 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de43a97e-a7d2-4b3d-84fa-a5a760b3d843" name="Changes" comment="modifiend gitignore">
-      <change beforePath="$PROJECT_DIR$/.idea/Web_Semester_Yobidoyobi.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1fda6bb7-2b79-498f-ba7c-08963393f446.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1fda6bb7-2b79-498f-ba7c-08963393f446/storage_v2/_src_/database/yobi.3a04AA/schema/public.abK9xQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf/storage_v2/_src_/database/yobi.3a04AA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf/storage_v2/_src_/database/yobi.3a04AA/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf/storage_v2/_src_/database/yobi.3a04AA/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf/storage_v2/_src_/database/yobi.3a04AA/schema/public.abK9xQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hello.py" beforeDir="false" afterPath="$PROJECT_DIR$/hello.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/header_footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/header_footer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/products.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/products.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/profil.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/registration_login.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/registration_login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/orders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/profil.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/profil_redactor.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profil_redactor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reduct_profil.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/wishes.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/wishes.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +95,7 @@
       <option name="presentableId" value="Default" />
       <updated>1668299849726</updated>
       <workItem from="1668299853665" duration="55110000" />
-      <workItem from="1668426949288" duration="48306000" />
+      <workItem from="1668426949288" duration="76707000" />
     </task>
     <task id="LOCAL-00001" summary="commit -am &quot;modified registration form&quot;">
       <created>1668305355537</created>
@@ -218,7 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668497497555</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="modifiend gitignore">
+      <created>1668497589612</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1668497589612</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

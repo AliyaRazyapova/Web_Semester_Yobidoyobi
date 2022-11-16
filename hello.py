@@ -177,11 +177,37 @@ def cart_list():
     user_1 = user[0]['user_id']
     products = db.select(
         f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+    ab = len(products)
+    amount_1 = []
+    cost_1 = []
+    for i in range(len(products)):
+        product_1 = products[i]['product_id']
+        amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0]['amount']
+        if amount == 0:
+            get_product_cart_delete(product_1)
+        amount_1.append(amount)
+        price = int(products[i]['price'])
+        cost = price * amount
+        cost_1.append(cost)
+    cost_all = sum(cost_1)
     if products:
-        return render_template("wishes.html", products=products)
+        return render_template("cart.html", products=products, ab=ab, amount=amount_1, cost=cost_1, cost_all=cost_all)
     else:
         return render_template('error.html', error=error)
 
+
+@app.route("/order/", methods=['POST', 'GET'])
+def order_list():
+    error = 'Добавьте товары из корзины'
+    test = 1
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    carts = db.select(f"SELECT * FROM products JOIN (SELECT cart_id, user_id FROM orders GROUP BY user_id, cart_id) c ON products.product_id = c.cart_id WHERE user_id='{user_1}';")
+    if carts:
+        return render_template("orders.html", products=carts, test=test)
+    else:
+        return render_template('error.html', error=error)
 
 @app.route("/product/<int:product_id>/wishes_add/")
 def get_product_wishes_add(product_id):
@@ -191,7 +217,7 @@ def get_product_wishes_add(product_id):
     user_1 = user[0]['user_id']
     product_1 = product[0]['product_id']
     db.insert(f"INSERT INTO wishes(user_id, product_id) values ('{user_1}', '{product_1}');")
-    return redirect(url_for("get_product", product_id=product[0]['product_id']), 301)
+    return redirect(url_for("wishes_list"), 302)
 
 
 @app.route("/product/<int:product_id>/cart_add/")
@@ -202,13 +228,87 @@ def get_product_cart_add(product_id):
     user_1 = user[0]['user_id']
     product_1 = product[0]['product_id']
     db.insert(f"INSERT INTO cart(user_id, product_id) values ('{user_1}', '{product_1}');")
-    return redirect(url_for("get_product", product_id=product[0]['product_id']), 301)
+    return redirect(url_for("cart_list"), 302)
+
+
+@app.route("/product/<int:product_id>/cart_redactor_amount_product_plus/", methods=['GET', 'POST'])
+def cart_redactor_amount_product_plus(product_id):
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    amount = db.select(f"SELECT * FROM cart WHERE user_id = '{user_1}';")
+    amount_1 = int(amount[0]['amount']) + 1
+    product_1 = product_id
+    db.insert(f"UPDATE cart SET amount = '{amount_1}' WHERE user_id = {user_1} AND product_id = {product_1};")
+    amount_2 = int(db.select(f"SELECT * FROM cart WHERE user_id = '{user_1}';")[0]['amount'])
+    if amount_2 < 1:
+        get_product_cart_delete(product_1)
+    return redirect(url_for("cart_list", amount=amount_2), 302)
+
+
+@app.route("/product/<int:product_id>/cart_redactor_amount_product_minus/", methods=['GET', 'POST'])
+def cart_redactor_amount_product_minus(product_id):
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    amount = db.select(f"SELECT * FROM cart WHERE user_id = '{user_1}';")
+    amount_1 = int(amount[0]['amount']) - 1
+    product_1 = product_id
+    db.insert(f"UPDATE cart SET amount = '{amount_1}' WHERE user_id = {user_1} AND product_id = {product_1};")
+    amount_2 = int(db.select(f"SELECT * FROM cart WHERE user_id = '{user_1}';")[0]['amount'])
+    if amount_2 == 0:
+        get_product_cart_delete(product_1)
+    return redirect(url_for("cart_list", amount=amount_2), 302)
+
+@app.route("/product/<int:product_id>/car_delete/")
+def get_product_cart_delete(product_id):
+    product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    product_1 = product[0]['product_id']
+    db.insert(
+        f"DELETE FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}' AND ctid = (SELECT min(ctid) FROM cart WHERE user_id = '{user_1}' and product_id = '{product_1}');")
+    return redirect(url_for("get_product", product_id=product_1), 301)
+
+
+@app.route("/product/<int:product_id>/wishes_delete/")
+def get_product_wishes_delete(product_id):
+    product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    product_1 = product[0]['product_id']
+    db.insert(
+        f"DELETE FROM wishes WHERE user_id = '{user_1}' AND product_id = '{product_1}' AND ctid = (SELECT min(ctid) FROM wishes WHERE user_id = '{user_1}' and product_id = '{product_1}');")
+    return redirect(url_for("wishes_list"), 302)
+
+
+@app.route("/product/<int:product_id>/order_delete/")
+def get_product_order_delete(product_id):
+    product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    product_1 = product[0]['product_id']
+    db.insert(
+        f"DELETE FROM orders WHERE user_id = '{user_1}' AND product_id = '{product_1}' AND ctid = (SELECT min(ctid) FROM orders WHERE user_id = '{user_1}' and product_id = '{product_1}');")
+    return redirect(url_for("order_list"), 302)
+
+@app.route("/product/<int:product_id>/order_add/")
+def get_product_order_add(product_id):
+    product = db.select(f"SELECT * FROM cart WHERE product_id = {product_id}")
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    product_1 = product[0]['product_id']
+    db.insert(f"INSERT INTO orders(user_id, cart_id) values ('{user_1}', '{product_1}');")
+    return redirect(url_for("order_list"), 302)
 
 
 @app.route("/product/<int:product_id>")
 def get_product(product_id):
     product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
-    print(product)
     if len(product):
         return render_template("product.html", title=product[0]['product_id'], product=product[0])
 

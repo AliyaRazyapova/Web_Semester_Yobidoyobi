@@ -127,3 +127,25 @@
 .product{
     display: block;
 }
+
+.kek{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.post_23{
+    margin: 2% 40%;
+}
+
+.field{
+    font: 700 16px "Museo Sans Cyrl 700",sans-serif;
+    color: #203842;
+}
+
+.text_1{
+    font: 16px "Museo Sans Cyrl 700",sans-serif;
+    /*display: flex;*/
+    /*text-align: right;*/
+    /*justify-content: flex-start;*/
+}

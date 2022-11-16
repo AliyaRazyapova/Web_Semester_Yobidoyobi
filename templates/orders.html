@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Заказы</title>
-</head>
-<body>
+{% extends 'base.html' %}
+    {% block body %}
+        <div class="title">
+            <h1> Оформление заказа </h1>
+        </div>
+        <div class="orders">
+{#        TODO: указать значение#}
+            <div class="number_order">
+                <p>Номер заказа: </p>
+            </div>
+        {% for product in products %}
 
-</body>
-</html>
+        {% endfor %}
+        </div>
+    {% endblock %}R

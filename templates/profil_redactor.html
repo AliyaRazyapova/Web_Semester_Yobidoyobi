@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <form method="post">
+{% extends 'base.html' %}
+{% block body %}
+    <br>
+    <div style="display: flex; justify-content: center">
+        <h1>Редактирование личного кабинета</h1>
+    </div>
+    <form method="post", class="post_23">
         <div class="all">
             <div class="field">
                 <label class="surname">
@@ -15,9 +14,10 @@
             </div>
             <br>
             <div class="field">
-                <label class="name">
+                <label class="name_1">
                     <b>Имя</b>
                 </label>
+                <br>
                 <input type="text" class="text_1" placeholder="введите имя" name="name" value="{{ user[0].name }}" required>
             </div>
             <br>
@@ -39,11 +39,13 @@
                 <label class="floor_1">
                     <b>Пол</b>
                 </label>
+            <br>
                 {% if user[0].floor == "female" %}
                     <input type="radio" name="floor" checked = "checked" value="male">
                     <label class="female">мужской</label>
                     <input type="radio" name="floor" value="female">
                     <label class="female">женский</label>
+                    <br>
                     <input type="radio" name="floor" value="xz">
                     <label class="xz">не определился</label>
                 {% elif user[0].floor == "male" %}
@@ -51,6 +53,7 @@
                     <label class="female">мужской</label>
                     <input type="radio" name="floor" checked = "checked" value="female">
                     <label class="female">женский</label>
+                    <br>
                     <input type="radio" name="floor" value="xz">
                     <label class="xz">не определился</label>
                 {% elif user[0].floor == "xz" %}
@@ -58,6 +61,7 @@
                     <label class="female">мужской</label>
                     <input type="radio" name="floor" value="female">
                     <label class="female">женский</label>
+                    <br>
                     <input type="radio" name="floor" checked = "checked" value="xz">
                     <label class="xz">не определился</label>
                 {% endif %}
@@ -76,10 +80,10 @@
                 </label>
                 <input type="tel" class="text_1" placeholder="введите номер телефона" id="phone" name="phone" value="{{ user[0].phone }}">
             </div>
-            <button type="submit" class="profil_redactor_button">
+        <br>
+            <button type="submit" class="profil_redactor_button" style="margin-left: 9%">
                 Применить изменения
             </button>
         </div>
     </form>
-</body>
-</html>
+{% endblock %}

@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/profil.css">
-    <title>Личный кабинет</title>
-</head>
-<body>
-    <form method="post" class="post">
+{% extends 'base.html' %}
+{% block body %}
+    <br>
+    <div style="margin-left: 38%">
+        <h1>Личный кабинет</h1>
+    </div>
+    <form method="post" class="post_23">
         <div class="main">
-            <div class="content">
+            <div class="content_1">
                 <div class="kek">
                     <div class="field">Фамилия:</div>
                     <div class="text_1">{{ user[0].surname }}</div>
@@ -45,12 +43,12 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="button_redactor_profil">
+        <br>
+        <button type="submit" class="button_redactor_profil" style="margin-left: 9%">
             Редактировать профиль
         </button>
     </form>
-</body>
-</html>
+{% endblock %}
 
 {#<html>#}
 {#<head>#}
