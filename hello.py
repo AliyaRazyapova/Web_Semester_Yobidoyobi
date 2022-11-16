@@ -107,9 +107,22 @@ def registration_list():
 def profil_list():
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    orders = db.select(f"SELECT * FROM orders WHERE user_id = '{user_1}';")
+    order_num = []
+    for i in range(len(orders)):
+        kek = int(orders[i]['order_number'])
+        if not kek in order_num:
+            order_num.append(kek)
+    tk_1 = []
+    for i in range(len(order_num)):
+        tk = db.select(f"SELECT COUNT(*) FROM orders WHERE order_number = '{str(order_num[i])}';")
+        tk_1.append(tk[0]['count'])
+    kek = len(tk_1)
+    lol = len(order_num)
     if request.method == 'POST':
         return redirect(url_for('profil_redactor'), 301)
-    return render_template("profil.html", user=user)
+    return render_template("profil.html", user=user, kek=kek, orders=orders, lol=lol, tk=tk_1, order_num=order_num)
 
 
 @app.route("/profil/redactor/", methods=['GET', 'POST'])
@@ -232,7 +245,7 @@ def message_list():
     cost_all = sum(cost_1)
     for i in range(len(products)):
         product_1 = products[i]['product_id']
-        db.insert(f"INSERT INTO orders(user_id, product_id, product_name, product_amount, order_number, cost) values ('{user_1}', '{product_1}', '{products[i]['name']}', '{amount_1[i]}', '{order_number}', '{cost}');")
+        db.insert(f"INSERT INTO orders(user_id, product_name, order_number, cost) values ('{user_1}', '{products[i]['name']}', '{order_number}', '{cost_all}');")
         get_product_cart_delete(product_1)
     if products:
         return render_template("message.html")
@@ -262,8 +275,7 @@ def order_list():
         order_number += 1
     for i in range(len(products)):
         product_1 = products[i]['product_id']
-        amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0][
-            'amount']
+        amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0]['amount']
         if amount == 0:
             get_product_cart_delete(product_1)
         amount_1.append(amount)

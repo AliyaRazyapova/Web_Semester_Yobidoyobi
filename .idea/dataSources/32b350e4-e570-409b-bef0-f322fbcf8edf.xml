@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.43">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <IntrospectionStateNumber>1454</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1550</IntrospectionStateNumber>
       <ServerVersion>11.17</ServerVersion>
       <StartupTime>1668425678</StartupTime>
       <TimeZones>true ACDT
@@ -858,11 +858,11 @@ false posixrules
 12716||10|C|G
 12716||-9223372036854775808|U|G
 12716||10|U|G</Grants>
-      <IntrospectionStateNumber>1454</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1550</IntrospectionStateNumber>
       <ObjectId>17789</ObjectId>
       <Relations>sequence|table|17825|17822|1
 sequence|table|17832|17819|3
-sequence|table|17842|17839|1
+sequence|table|17858|17850|1
 sequence|table|17815|17806|11
 sequence|table|17817|17790|1
 </Relations>
@@ -4213,7 +4213,7 @@ sequence|table|17817|17790|1
     <schema id="267" parent="16" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>1454</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1550</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>360</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4226,8 +4226,8 @@ sequence|table|17817|17790|1
     </sequence>
     <sequence id="269" parent="267" name="orders_id_seq">
       <DataType>bigint|0s</DataType>
-      <ObjectId>17842</ObjectId>
-      <StateNumber>1448</StateNumber>
+      <ObjectId>17858</ObjectId>
+      <StateNumber>1536</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
     <sequence id="270" parent="267" name="products_id_seq">
@@ -4250,12 +4250,12 @@ sequence|table|17817|17790|1
     </sequence>
     <table id="273" parent="267" name="cart">
       <ObjectId>17819</ObjectId>
-      <StateNumber>1414</StateNumber>
+      <StateNumber>1479</StateNumber>
       <OwnerName>postgres</OwnerName>
     </table>
     <table id="274" parent="267" name="orders">
-      <ObjectId>17839</ObjectId>
-      <StateNumber>1448</StateNumber>
+      <ObjectId>17850</ObjectId>
+      <StateNumber>1536</StateNumber>
       <OwnerName>postgres</OwnerName>
     </table>
     <table id="275" parent="267" name="products">
@@ -4265,7 +4265,7 @@ sequence|table|17817|17790|1
     </table>
     <table id="276" parent="267" name="users">
       <ObjectId>17806</ObjectId>
-      <StateNumber>1307</StateNumber>
+      <StateNumber>1530</StateNumber>
       <OwnerName>postgres</OwnerName>
     </table>
     <table id="277" parent="267" name="wishes">
@@ -4295,7 +4295,15 @@ sequence|table|17817|17790|1
       <StateNumber>1414</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="281" parent="273" name="cart_pkey">
+    <column id="281" parent="273" name="amount">
+      <DataType>bigint|0s</DataType>
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>1479</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <index id="282" parent="273" name="cart_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17837</ObjectId>
@@ -4304,52 +4312,80 @@ sequence|table|17817|17790|1
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="282" parent="273" name="cart_pkey">
+    <key id="283" parent="273" name="cart_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17838</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1415</StateNumber>
       <UnderlyingIndexId>17837</UnderlyingIndexId>
     </key>
-    <column id="283" parent="274" name="id">
+    <column id="284" parent="274" name="id">
       <DataType>bigint|0s</DataType>
       <IdentityKind>always</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>1448</StateNumber>
+      <StateNumber>1536</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="284" parent="274" name="user_id">
+    <column id="285" parent="274" name="user_id">
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>1448</StateNumber>
+      <StateNumber>1535</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="285" parent="274" name="product_id">
+    <column id="286" parent="274" name="product_id">
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>1453</StateNumber>
+      <StateNumber>1535</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="286" parent="274" name="orders_pkey">
+    <column id="287" parent="274" name="product_name">
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>1535</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="288" parent="274" name="product_amount">
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>1535</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <column id="289" parent="274" name="cost">
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>1535</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <column id="290" parent="274" name="order_number">
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StateNumber>1536</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <index id="291" parent="274" name="orders_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>17847</ObjectId>
+      <ObjectId>17856</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>1448</StateNumber>
+      <StateNumber>1535</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="287" parent="274" name="orders_pkey">
+    <key id="292" parent="274" name="orders_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>17848</ObjectId>
+      <ObjectId>17857</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>1448</StateNumber>
-      <UnderlyingIndexId>17847</UnderlyingIndexId>
+      <StateNumber>1535</StateNumber>
+      <UnderlyingIndexId>17856</UnderlyingIndexId>
     </key>
-    <column id="288" parent="275" name="product_id">
+    <column id="293" parent="275" name="product_id">
       <DataType>bigint|0s</DataType>
       <IdentityKind>always</IdentityKind>
       <NotNull>1</NotNull>
@@ -4357,56 +4393,56 @@ sequence|table|17817|17790|1
       <StateNumber>1364</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="289" parent="275" name="category">
+    <column id="294" parent="275" name="category">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>1259</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="290" parent="275" name="name">
+    <column id="295" parent="275" name="name">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>1259</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="291" parent="275" name="gramms">
+    <column id="296" parent="275" name="gramms">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>1259</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="292" parent="275" name="price">
+    <column id="297" parent="275" name="price">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>1259</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="293" parent="275" name="img">
+    <column id="298" parent="275" name="img">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>1259</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="294" parent="275" name="description">
+    <column id="299" parent="275" name="description">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>1359</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="295" parent="275" name="nutritional_value">
+    <column id="300" parent="275" name="nutritional_value">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>1359</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="296" parent="275" name="sets_pkey">
+    <index id="301" parent="275" name="sets_pkey">
       <ColNames>product_id</ColNames>
       <ObjectId>17801</ObjectId>
       <Primary>1</Primary>
@@ -4414,68 +4450,68 @@ sequence|table|17817|17790|1
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="297" parent="275" name="sets_pkey">
+    <key id="302" parent="275" name="sets_pkey">
       <ObjectId>17802</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1259</StateNumber>
       <UnderlyingIndexId>17801</UnderlyingIndexId>
     </key>
-    <column id="298" parent="276" name="surname">
+    <column id="303" parent="276" name="surname">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>1296</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="299" parent="276" name="name">
+    <column id="304" parent="276" name="name">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>1296</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="300" parent="276" name="patronymic">
+    <column id="305" parent="276" name="patronymic">
       <DataType>varchar|0s</DataType>
       <Position>3</Position>
       <StateNumber>1296</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="301" parent="276" name="birthday">
+    <column id="306" parent="276" name="birthday">
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>1296</StateNumber>
       <TypeId>1082</TypeId>
     </column>
-    <column id="302" parent="276" name="floor">
+    <column id="307" parent="276" name="floor">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>1296</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="303" parent="276" name="email">
+    <column id="308" parent="276" name="email">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>1298</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="304" parent="276" name="password">
+    <column id="309" parent="276" name="password">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>1296</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="305" parent="276" name="phone">
+    <column id="310" parent="276" name="phone">
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>1297</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="306" parent="276" name="role">
+    <column id="311" parent="276" name="role">
       <DataType>varchar|0s</DataType>
       <DefaultExpression>USER</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4483,7 +4519,7 @@ sequence|table|17817|17790|1
       <StateNumber>1302</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="307" parent="276" name="user_id">
+    <column id="312" parent="276" name="user_id">
       <DataType>bigint|0s</DataType>
       <IdentityKind>always</IdentityKind>
       <NotNull>1</NotNull>
@@ -4491,7 +4527,13 @@ sequence|table|17817|17790|1
       <StateNumber>1363</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="308" parent="276" name="users_pkey">
+    <column id="313" parent="276" name="adres">
+      <DataType>varchar|0s</DataType>
+      <Position>12</Position>
+      <StateNumber>1530</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="314" parent="276" name="users_pkey">
       <ColNames>email</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17812</ObjectId>
@@ -4503,14 +4545,14 @@ sequence|table|17817|17790|1
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="309" parent="276" name="users_pkey">
+    <key id="315" parent="276" name="users_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17813</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1299</StateNumber>
       <UnderlyingIndexId>17812</UnderlyingIndexId>
     </key>
-    <column id="310" parent="277" name="id">
+    <column id="316" parent="277" name="id">
       <DataType>bigint|0s</DataType>
       <IdentityKind>always</IdentityKind>
       <NotNull>1</NotNull>
@@ -4518,19 +4560,19 @@ sequence|table|17817|17790|1
       <StateNumber>1404</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="311" parent="277" name="user_id">
+    <column id="317" parent="277" name="user_id">
       <DataType>bigint|0s</DataType>
       <Position>2</Position>
       <StateNumber>1424</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="312" parent="277" name="product_id">
+    <column id="318" parent="277" name="product_id">
       <DataType>bigint|0s</DataType>
       <Position>3</Position>
       <StateNumber>1424</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="313" parent="277" name="wishes_pkey">
+    <index id="319" parent="277" name="wishes_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17830</ObjectId>
@@ -4539,7 +4581,7 @@ sequence|table|17817|17790|1
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="314" parent="277" name="wishes_pkey">
+    <key id="320" parent="277" name="wishes_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17831</ObjectId>
       <Primary>1</Primary>
