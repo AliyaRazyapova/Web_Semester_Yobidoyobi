@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block body %}
+    <br>
+    <div style="display: flex; justify-content: center">
+        <h1>Редактирование товара</h1>
+    </div>
+    <form method="post", class="post_23">
+        <div class="all">
+            <div class="field">
+                <label class="field_123">
+                    <b>Категория</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите название" name="category" value="{{ products[0].category }}" required>
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Название</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите название" name="name" value="{{ products[0].name }}" required>
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Граммовка</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите граммовку" name="gramms" value="{{ products[0].gramms }}" required>
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Цена</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите цену" name="price" value="{{ products[0].price }}" required>
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Картинка</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите путь к картинке" name="img" value="{{ products[0].img }}" required>
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Цена</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите описание" name="description" value="{{ products[0].description }}" required>
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Пищевая ценность на 100 гр.</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите пищевую ценность" name="nutritional_value" value="{{ products[0].nutritional_value }}" required>
+            </div>
+            <br>
+            <button type="submit" class="pro_redactor_button" style="margin-left: 9%">
+                Применить изменения
+            </button>
+        </div>
+    </form>
+{% endblock %}

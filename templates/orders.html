@@ -3,91 +3,91 @@
         <div class="title">
             <h1> Оформление заказа </h1>
         </div>
-        <div class="orders">
-            <div class="number_order">
-                <p>Номер заказа: {{ order_number }} </p>
-            </div>
-        <hr>
-        <div class="data_user">
-            <div class="pr_2">
-                <div class="title_pr">Фамилия:</div>
-                <div class="value_pr"> {{ user.surname}} </div>
-            </div>
-            <br>
-            <div class="pr_2">
-                <div class="title_pr">Имя:</div>
-                <div class="value_pr"> {{ user.name}} </div>
-            </div>
-            <br>
-            <div class="pr_2">
-                <div class="title_pr">Номер телефона:</div>
-                <div class="value_pr"> {{ user.phone}} </div>
-            </div>
-            <br>
-            <div class="pr_2">
-                <div class="title_pr">Адрес:</div>
-                <div class="value_pr"> {{ user.adres}} </div>
-            </div>
-            <br>
-        </div>
-        <hr>
-        <hr>
-        {% for i in range(ab) %}
-            <div class="products">
-                <div class="first_n_i">
-                    <div class="pr_2">
-                        <div class="title_pr">Название:</div>
-                        <div class="value_pr"> {{ products[i].name}}</div>
-                    </div>
-                    <br>
-                    <div class="img_pr">
-                        <img src="/static/imgs/{{ products[i].img }}" style="width: 150px;">
-                    </div>
-                    <br>
-                    <div class="pr_2">
-                        <div class="title_pr">Вес:</div>
-                        <div class="value_pr"> {{ products[i].gramms}} гр.</div>
-                    </div>
-                    <br>
-                    <div class="pr_2">
-                        <div class="title_pr">Цена:</div>
-                        <div class="value_pr">{{ products[i].price }} ₽</div>
-                    </div>
-                    <br>
-                    <div class="pr_2">
-                        <div class="title_pr">Состав:</div>
-                        <div class="value_pr">{{ products[i].description }}</div>
-                    </div>
-                    <br>
-                    <div class="pr_2">
-                        <div class="title_pr">Пищевая ценность на 100 гр.</div>
-                        <div class="value_pr">{{ products[i].nutritional_value }}</div>
-                    </div>
-                    <br>
-                    <div class="pr_2">
-                        <div class="title_pr">Количество: </div>
-                        <div class="value_pr">{{ amount[i] }}</div>
-                    </div>
-                    <br>
-                    <div class="pr_2">
-                        <div class="title_pr">Стоимость: </div>
-                        <div class="value_pr">{{ cost[i] }} ₽</div>
-                    </div>
-                    <br>
+            <div class="orders" style="margin-left: 8px">
+                <div class="number_order" style="display: flex; flex-direction: row;">
+                    <div class="title_pr">Номер заказа:</div>
+                    <div class="value_pr">{{ order_number }} </div>
                 </div>
+            <hr>
+            <div class="data_user">
+                <div class="pr_2">
+                    <div class="title_pr">Фамилия:</div>
+                    <div class="value_pr"> {{ user.surname}} </div>
+                </div>
+                <br>
+                <div class="pr_2">
+                    <div class="title_pr">Имя:</div>
+                    <div class="value_pr"> {{ user.name}} </div>
+                </div>
+                <br>
+                <div class="pr_2">
+                    <div class="title_pr">Номер телефона:</div>
+                    <div class="value_pr"> {{ user.phone}} </div>
+                </div>
+                <br>
+                <div class="pr_2">
+                    <div class="title_pr">Адрес:</div>
+                    <div class="value_pr"> {{ user.adres}} </div>
+                </div>
+                <br>
             </div>
             <hr>
-        {% endfor %}
-        <hr>
-        <div class="end_order">
-            <h2>К оплате: {{ cost_all }} ₽</h2>
-            <h3>Оплата наличными курьеру</h3>
-            <div class="order_to_courier">
-                <div class="order_to_courier_1" onclick="location.href = '{{ url_for('message_list') }}'">
-                    <p>Отправить</p>
+            <hr>
+            {% for i in range(ab) %}
+                <div class="products">
+                    <div class="first_n_i">
+                        <div class="pr_2">
+                            <div class="title_pr">Название:</div>
+                            <div class="value_pr"> {{ products[i].name}}</div>
+                        </div>
+                        <br>
+                        <div class="img_pr">
+                            <img src="/static/imgs/{{ products[i].img }}" style="width: 150px;">
+                        </div>
+                        <br>
+                        <div class="pr_2">
+                            <div class="title_pr">Вес:</div>
+                            <div class="value_pr"> {{ products[i].gramms}} гр.</div>
+                        </div>
+                        <br>
+                        <div class="pr_2">
+                            <div class="title_pr">Цена:</div>
+                            <div class="value_pr">{{ products[i].price }} ₽</div>
+                        </div>
+                        <br>
+                        <div class="pr_2">
+                            <div class="title_pr">Состав:</div>
+                            <div class="value_pr">{{ products[i].description }}</div>
+                        </div>
+                        <br>
+                        <div class="pr_2">
+                            <div class="title_pr">Пищевая ценность на 100 гр.</div>
+                            <div class="value_pr">{{ products[i].nutritional_value }}</div>
+                        </div>
+                        <br>
+                        <div class="pr_2">
+                            <div class="title_pr">Количество: </div>
+                            <div class="value_pr">{{ amount[i] }}</div>
+                        </div>
+                        <br>
+                        <div class="pr_2">
+                            <div class="title_pr">Стоимость: </div>
+                            <div class="value_pr">{{ cost[i] }} ₽</div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+            <hr>
+            <div class="end_order">
+                <h2>К оплате: {{ cost_all }} ₽</h2>
+                <h3>Оплата наличными курьеру</h3>
+                <div class="order_to_courier">
+                    <div class="order_to_courier_1" onclick="location.href = '{{ url_for('message_list') }}'">
+                        <button style="font-size: 20px">Отправить</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
         </div>
     {% endblock %}R

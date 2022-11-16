@@ -40,6 +40,23 @@
                         <p>Корзина</p>
                     </div>
                 </div>
+                {% if param %}
+                    <div class="cart">
+                        <div class="cart_1" onclick="location.href = '{{ url_for("render_form", product_id = product.product_id) }}'">
+                            <div class="lol_p" style="text-align: center">Добавить новый товар</div>
+                        </div>
+                    </div>
+                    <div class="cart">
+                        <div class="cart_1" onclick="location.href = '{{ url_for("render_form_redactor", product_id = product.product_id) }}'">
+                            <div class="lol_p" style="text-align: center">Редактировать товар</div>
+                        </div>
+                    </div>
+                    <div class="cart">
+                        <div class="cart_1" onclick="location.href = '{{ url_for("render_form_delete", product_id = product.product_id) }}'">
+                            <div class="lol_p" style="text-align: center">Удалить товар</div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

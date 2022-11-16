@@ -173,7 +173,7 @@ def profil_redactor():
 
 @app.route("/wishes/")
 def wishes_list():
-    error = 'Корзина пуста'
+    error = 'Вам ничего не нравится? Жмите кнопочку "Избранное"'
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
     user_1 = user[0]['user_id']
@@ -255,7 +255,6 @@ def message_list():
 
 @app.route("/order/", methods=['POST', 'GET'])
 def order_list():
-    error = 'Добавьте товары из корзины'
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
     user_1 = user[0]['user_id']
@@ -285,8 +284,6 @@ def order_list():
     cost_all = sum(cost_1)
     if products:
         return render_template("orders.html", products=products, ab=ab, amount=amount_1, cost=cost_1, cost_all=cost_all, user=user[0], order_number=order_number)
-    else:
-        return render_template('error.html', error=error)
 
 
 @app.route("/product/<int:product_id>/wishes_add/")
@@ -349,13 +346,13 @@ def get_product_cart_delete(product_id):
     product_1 = product[0]['product_id']
     db.insert(
         f"DELETE FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}' AND ctid = (SELECT min(ctid) FROM cart WHERE user_id = '{user_1}' and product_id = '{product_1}');")
-    return redirect(url_for("get_product", product_id=product_1), 301)
+    return redirect(url_for("cart_list", product_id=product_1), 301)
 
 
 @app.route("/product/<int:product_id>/wishes_delete/")
 def get_product_wishes_delete(product_id):
     product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
-    email_1 = request.cookies.get('postgres')
+    email_1 = (request.cookies.get('postgres'))
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
     user_1 = user[0]['user_id']
     product_1 = product[0]['product_id']
@@ -364,33 +361,21 @@ def get_product_wishes_delete(product_id):
     return redirect(url_for("wishes_list"), 302)
 
 
-@app.route("/product/<int:product_id>/order_delete/")
-def get_product_order_delete(product_id):
-    product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
-    email_1 = request.cookies.get('postgres')
-    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-    user_1 = user[0]['user_id']
-    product_1 = product[0]['product_id']
-    db.insert(
-        f"DELETE FROM orders WHERE user_id = '{user_1}' AND product_id = '{product_1}' AND ctid = (SELECT min(ctid) FROM orders WHERE user_id = '{user_1}' and product_id = '{product_1}');")
-    return redirect(url_for("order_list"), 302)
-
-@app.route("/product/<int:product_id>/order_add/")
-def get_product_order_add(product_id):
-    product = db.select(f"SELECT * FROM cart WHERE product_id = {product_id}")
-    email_1 = request.cookies.get('postgres')
-    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-    user_1 = user[0]['user_id']
-    product_1 = product[0]['product_id']
-    db.insert(f"INSERT INTO orders(user_id, cart_id) values ('{user_1}', '{product_1}');")
-    return redirect(url_for("order_list"), 302)
-
-
 @app.route("/product/<int:product_id>")
 def get_product(product_id):
     product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
+    users = db.select(f"SELECT user_id FROM users WHERE role = 'admin'")
+    admins = []
+    for i in range(len(users)):
+        admins.append(users[i]['user_id'])
+    email_1 = (request.cookies.get('postgres'))
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    param = False
+    if user_1 in admins:
+        param = True
     if len(product):
-        return render_template("product.html", title=product[0]['product_id'], product=product[0])
+        return render_template("product.html", title=product[0]['product_id'], product=product[0], users=users, param=param)
 
 @app.route("/sets/")
 def sets_list():
@@ -521,6 +506,44 @@ def render_form():
     }
 
     return render_template('product_form.html', **context)
+
+
+@app.route('/product/<int:product_id>/delete/', methods=['GET', 'POST'])
+def render_form_delete(product_id):
+    db.insert(f"DELETE FROM products WHERE product_id = '{product_id}'")
+    return redirect(url_for('main_list'), 302)
+
+
+@app.route('/product/<int:product_id>/redactor/', methods=['GET', 'POST'])
+def render_form_redactor(product_id):
+    products = db.select(f"SELECT * FROM products WHERE product_id = '{product_id}';")
+    if request.method == 'POST':
+        name = request.form.get('name')
+        category = request.form.get('category')
+        gramms = request.form.get('gramms')
+        price = request.form.get('price')
+        img = request.form.get('img')
+        description = request.form.get('description')
+        nutritional_value = request.form.get('nutritional_value')
+        if category != products[0]['category']:
+            db.insert(f"UPDATE products SET category = '{category}' WHERE product_id = '{product_id}';")
+        if name != products[0]['name']:
+            db.insert(f"UPDATE products SET name = '{name}' WHERE product_id = '{product_id}';")
+        if gramms != products[0]['gramms']:
+            db.insert(f"UPDATE products SET gramms = '{gramms}' WHERE product_id = '{product_id}';")
+        if price != products[0]['price']:
+            db.insert(f"UPDATE products SET price = '{price}' WHERE product_id = '{product_id}';")
+        if img != products[0]['img']:
+            db.insert(f"UPDATE products SET img = '{img}' WHERE product_id = '{product_id}';")
+        if description != products[0]['description']:
+            db.insert(f"UPDATE products SET description = '{description}' WHERE product_id = '{product_id}';")
+        if nutritional_value != products[0]['nutritional_value']:
+            db.insert(f"UPDATE products SET nutritional_value = '{nutritional_value}' WHERE product_id = '{product_id}';")
+            res = ""
+            res.headers['location'] = url_for('main_list')
+            return res, 301
+        return redirect(url_for('main_list'), 302)
+    return render_template('product_redactor.html', products=products)
 
 
 if __name__ == '__main__':

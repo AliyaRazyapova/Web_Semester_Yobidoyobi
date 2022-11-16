@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="de43a97e-a7d2-4b3d-84fa-a5a760b3d843" name="Changes" comment="done orders">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf/storage_v2/_src_/database/yobi.3a04AA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/32b350e4-e570-409b-bef0-f322fbcf8edf/storage_v2/_src_/database/yobi.3a04AA/schema/public.abK9xQ.meta" afterDir="false" />
+    <list default="true" id="de43a97e-a7d2-4b3d-84fa-a5a760b3d843" name="Changes" comment="add orders to personal account">
+      <change afterPath="$PROJECT_DIR$/templates/product_redactor.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hello.py" beforeDir="false" afterPath="$PROJECT_DIR$/hello.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/profil.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/products.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/products.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/message.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/message.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/orders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +101,7 @@
       <option name="presentableId" value="Default" />
       <updated>1668299849726</updated>
       <workItem from="1668299853665" duration="55110000" />
-      <workItem from="1668426949288" duration="87924000" />
+      <workItem from="1668426949288" duration="100352000" />
     </task>
     <task id="LOCAL-00001" summary="commit -am &quot;modified registration form&quot;">
       <created>1668305355537</created>
@@ -238,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668568240397</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="add orders to personal account">
+      <created>1668579970231</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1668579970231</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,9 +283,10 @@
     <MESSAGE value="modifiend gitignore" />
     <MESSAGE value="done cart" />
     <MESSAGE value="done orders" />
-    <option name="LAST_COMMIT_MESSAGE" value="done orders" />
+    <MESSAGE value="add orders to personal account" />
+    <option name="LAST_COMMIT_MESSAGE" value="add orders to personal account" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Web_Semester_Yobidoyobi$Web_Semester_Yobidoyobi.coverage" NAME="Web_Semester_Yobidoyobi Coverage Results" MODIFIED="1668562685449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Web_Semester_Yobidoyobi$Web_Semester_Yobidoyobi.coverage" NAME="Web_Semester_Yobidoyobi Coverage Results" MODIFIED="1668589879373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
