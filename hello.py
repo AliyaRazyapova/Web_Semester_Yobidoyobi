@@ -127,6 +127,7 @@ def profil_redactor():
         floor = request.form.get('floor')
         birthday = request.form.get('birthday')
         phone = request.form.get('phone')
+        adres = request.form.get('adres')
         if '@' not in email or '.' not in email:
             error = 'Логин не верный'
         elif birthday >= '2012-11-16':
@@ -146,6 +147,8 @@ def profil_redactor():
                 db.insert(f"UPDATE users SET birthday = '{birthday}' WHERE user_id = {id};")
             if phone != user[0]['phone']:
                 db.insert(f"UPDATE users SET phone = '{phone}' WHERE user_id = {id};")
+            if adres != user[0]['adres']:
+                db.insert(f"UPDATE users SET adres = '{adres}' WHERE user_id = '{id}'")
                 res = make_response("")
                 res.set_cookie("postgres", email, 60 * 60 * 24 * 15)
                 res.headers['location'] = url_for('profil_list')
@@ -196,18 +199,83 @@ def cart_list():
         return render_template('error.html', error=error)
 
 
-@app.route("/order/", methods=['POST', 'GET'])
-def order_list():
-    error = 'Добавьте товары из корзины'
-    test = 1
+@app.route("/message/", methods=['POST', 'GET'])
+def message_list():
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
     user_1 = user[0]['user_id']
-    carts = db.select(f"SELECT * FROM products JOIN (SELECT cart_id, user_id FROM orders GROUP BY user_id, cart_id) c ON products.product_id = c.cart_id WHERE user_id='{user_1}';")
-    if carts:
-        return render_template("orders.html", products=carts, test=test)
+    products = db.select(
+        f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+    ab = len(products)
+    amount_1 = []
+    cost_1 = []
+    orders = db.select(f"SELECT * FROM orders WHERE user_id = '{user_1}';")
+    if not orders:
+        order_number = 1
+    else:
+        order_number = 0
+        for i in range(len(orders)):
+            if int(orders[i]['order_number']) > order_number:
+                order_number = int(orders[i]['order_number'])
+        order_number += 1
+        print(order_number)
+    for i in range(len(products)):
+        product_1 = products[i]['product_id']
+        amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0][
+            'amount']
+        if amount == 0:
+            get_product_cart_delete(product_1)
+        amount_1.append(amount)
+        price = int(products[i]['price'])
+        cost = price * amount
+        cost_1.append(cost)
+    cost_all = sum(cost_1)
+    for i in range(len(products)):
+        product_1 = products[i]['product_id']
+        db.insert(f"INSERT INTO orders(user_id, product_id, product_name, product_amount, order_number, cost) values ('{user_1}', '{product_1}', '{products[i]['name']}', '{amount_1[i]}', '{order_number}', '{cost}');")
+        get_product_cart_delete(product_1)
+    if products:
+        return render_template("message.html")
+    else:
+        return redirect(url_for('main_list'), 302)
+
+
+@app.route("/order/", methods=['POST', 'GET'])
+def order_list():
+    error = 'Добавьте товары из корзины'
+    email_1 = request.cookies.get('postgres')
+    user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
+    user_1 = user[0]['user_id']
+    products = db.select(
+        f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+    ab = len(products)
+    amount_1 = []
+    cost_1 = []
+    orders = db.select(f"SELECT * FROM orders WHERE user_id = '{user_1}';")
+    if not orders:
+        order_number = 1
+    else:
+        order_number = 0
+        for i in range(len(orders)):
+            if int(orders[i]['order_number']) > order_number:
+                order_number = int(orders[i]['order_number'])
+        order_number += 1
+    for i in range(len(products)):
+        product_1 = products[i]['product_id']
+        amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0][
+            'amount']
+        if amount == 0:
+            get_product_cart_delete(product_1)
+        amount_1.append(amount)
+        price = int(products[i]['price'])
+        cost = price * amount
+        cost_1.append(cost)
+    cost_all = sum(cost_1)
+    if products:
+        return render_template("orders.html", products=products, ab=ab, amount=amount_1, cost=cost_1, cost_all=cost_all, user=user[0], order_number=order_number)
     else:
         return render_template('error.html', error=error)
+
 
 @app.route("/product/<int:product_id>/wishes_add/")
 def get_product_wishes_add(product_id):
