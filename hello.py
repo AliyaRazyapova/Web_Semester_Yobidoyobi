@@ -1,6 +1,7 @@
 import datetime
 
 from flask import Flask, make_response, session, request, render_template, redirect, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 from db_util import Database
 
 
@@ -21,11 +22,22 @@ def main_page():
 def main_list():
     title = 'Ёбидоёби'
     error = 'Товара данной категории нет'
+    products = db.select(f"SELECT * FROM products")
+
+    if len(products) == 0:
+        return render_template('error.html', error=error)
+    return render_template("all.html", products=products, title=title)
+
+
+@app.route("/popular/")
+def popular_list():
+    title = 'Популярное'
+    error = 'Товара данной категории нет'
     products = db.select(f"SELECT * FROM products WHERE category = 'popular'")
 
     if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("main.html", products=products, title=title)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route("/login/", methods=['POST', 'GET'])
@@ -34,6 +46,7 @@ def login_list():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
+        # password = check_password_hash(password)
         clients = db.select(f"SELECT * FROM users ORDER BY user_id")
         for user in clients:
             if user['email'] == email and user['password'] == password:
@@ -73,7 +86,7 @@ def registration_list():
         floor = request.form.get('floor')
         password = request.form.get('password')
         repeat_password = request.form.get('repeat_password')
-        emails = db.select(f"SELECT email FROM users;")
+        emails = db.select(f"SELECT email FROM users")
         if email in emails:
             error = 'Пользователь с таким логином уже зарегестрирован'
         if password != repeat_password:
@@ -82,6 +95,7 @@ def registration_list():
             error = 'Логин не верный'
         elif birthday >= '2012-11-16':
             error = 'Дата не верна'
+        # password = generate_password_hash(password)
         if not error:
             db.insert(f"INSERT INTO users(email, name, surname, patronymic, floor, birthday, password, phone) values ('{email}', '{name}', '{surname}', '{patronymic}', '{floor}', '{birthday}', '{password}', {phone});")
             return redirect(url_for("main_list"))
@@ -105,24 +119,27 @@ def registration_list():
 
 @app.route("/profil/", methods=['GET', 'POST'])
 def profil_list():
+    error = 'Авторизуйтесь!'
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-    user_1 = user[0]['user_id']
-    orders = db.select(f"SELECT * FROM orders WHERE user_id = '{user_1}';")
-    order_num = []
-    for i in range(len(orders)):
-        kek = int(orders[i]['order_number'])
-        if not kek in order_num:
-            order_num.append(kek)
-    tk_1 = []
-    for i in range(len(order_num)):
-        tk = db.select(f"SELECT COUNT(*) FROM orders WHERE order_number = '{str(order_num[i])}';")
-        tk_1.append(tk[0]['count'])
-    kek = len(tk_1)
-    lol = len(order_num)
-    if request.method == 'POST':
-        return redirect(url_for('profil_redactor'), 301)
-    return render_template("profil.html", user=user, kek=kek, orders=orders, lol=lol, tk=tk_1, order_num=order_num)
+    if user:
+        user_1 = user[0]['user_id']
+        orders = db.select(f"SELECT * FROM orders WHERE user_id = '{user_1}';")
+        order_num = []
+        for i in range(len(orders)):
+            kek = int(orders[i]['order_number'])
+            if not kek in order_num:
+                order_num.append(kek)
+        tk_1 = []
+        for i in range(len(order_num)):
+            tk = db.select(f"SELECT COUNT(*) FROM orders WHERE order_number = '{str(order_num[i])}';")
+            tk_1.append(tk[0]['count'])
+        kek = len(tk_1)
+        lol = len(order_num)
+        if request.method == 'POST':
+            return redirect(url_for('profil_redactor'), 301)
+        return render_template("profil.html", user=user, kek=kek, orders=orders, lol=lol, tk=tk_1, order_num=order_num)
+    return render_template('error.html', error=error)
 
 
 @app.route("/profil/redactor/", methods=['GET', 'POST'])
@@ -172,43 +189,49 @@ def profil_redactor():
 
 @app.route("/wishes/")
 def wishes_list():
-    error = 'Вам ничего не нравится? Жмите кнопочку "Избранное"'
+    error = 'Авторизуйтесь!'
+    error_1 = 'Вам ничего не нравится? Жмите кнопочку "Избранное"'
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-    user_1 = user[0]['user_id']
-    products = db.select(
-        f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM wishes GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
-    if products:
-        return render_template("wishes.html", products=products)
-    else:
-        return render_template('error.html', error=error)
+    if user:
+        user_1 = user[0]['user_id']
+        products = db.select(
+            f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM wishes GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+        if products:
+            return render_template("wishes.html", products=products)
+        else:
+            return render_template('error.html', error=error_1)
+    return render_template('error.html', error=error)
 
 
 @app.route("/cart/", methods=['POST', 'GET'])
 def cart_list():
+    error_1 = 'Авторизуйтесь!'
     error = 'Корзина пуста'
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-    user_1 = user[0]['user_id']
-    products = db.select(
-        f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
-    ab = len(products)
-    amount_1 = []
-    cost_1 = []
-    for i in range(len(products)):
-        product_1 = products[i]['product_id']
-        amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0]['amount']
-        if amount == 0:
-            get_product_cart_delete(product_1)
-        amount_1.append(amount)
-        price = int(products[i]['price'])
-        cost = price * amount
-        cost_1.append(cost)
-    cost_all = sum(cost_1)
-    if products:
-        return render_template("cart.html", products=products, ab=ab, amount=amount_1, cost=cost_1, cost_all=cost_all)
-    else:
-        return render_template('error.html', error=error)
+    if user:
+        user_1 = user[0]['user_id']
+        products = db.select(
+            f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+        ab = len(products)
+        amount_1 = []
+        cost_1 = []
+        for i in range(len(products)):
+            product_1 = products[i]['product_id']
+            amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0]['amount']
+            if amount == 0:
+                get_product_cart_delete(product_1)
+            amount_1.append(amount)
+            price = int(products[i]['price'])
+            cost = price * amount
+            cost_1.append(cost)
+        cost_all = sum(cost_1)
+        if products:
+            return render_template("cart.html", products=products, ab=ab, amount=amount_1, cost=cost_1, cost_all=cost_all)
+        else:
+            return render_template('error.html', error=error)
+    return render_template('error.html', error=error_1)
 
 
 @app.route("/message/", methods=['POST', 'GET'])
@@ -253,35 +276,38 @@ def message_list():
 
 @app.route("/order/", methods=['POST', 'GET'])
 def order_list():
+    error = 'Авторизуйтесь!'
     email_1 = request.cookies.get('postgres')
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-    user_1 = user[0]['user_id']
-    products = db.select(
-        f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
-    ab = len(products)
-    amount_1 = []
-    cost_1 = []
-    orders = db.select(f"SELECT * FROM orders WHERE user_id = '{user_1}';")
-    if not orders:
-        order_number = 1
-    else:
-        order_number = 0
-        for i in range(len(orders)):
-            if int(orders[i]['order_number']) > order_number:
-                order_number = int(orders[i]['order_number'])
-        order_number += 1
-    for i in range(len(products)):
-        product_1 = products[i]['product_id']
-        amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0]['amount']
-        if amount == 0:
-            get_product_cart_delete(product_1)
-        amount_1.append(amount)
-        price = int(products[i]['price'])
-        cost = price * amount
-        cost_1.append(cost)
-    cost_all = sum(cost_1)
-    if products:
-        return render_template("orders.html", products=products, ab=ab, amount=amount_1, cost=cost_1, cost_all=cost_all, user=user[0], order_number=order_number)
+    if user:
+        user_1 = user[0]['user_id']
+        products = db.select(
+            f"SELECT * FROM products JOIN (SELECT product_id, user_id FROM cart GROUP BY user_id, product_id) c ON products.product_id = c.product_id WHERE user_id='{user_1}';")
+        ab = len(products)
+        amount_1 = []
+        cost_1 = []
+        orders = db.select(f"SELECT * FROM orders WHERE user_id = '{user_1}';")
+        if not orders:
+            order_number = 1
+        else:
+            order_number = 0
+            for i in range(len(orders)):
+                if int(orders[i]['order_number']) > order_number:
+                    order_number = int(orders[i]['order_number'])
+            order_number += 1
+        for i in range(len(products)):
+            product_1 = products[i]['product_id']
+            amount = db.select(f"SELECT amount FROM cart WHERE user_id = '{user_1}' AND product_id = '{product_1}';")[0]['amount']
+            if amount == 0:
+                get_product_cart_delete(product_1)
+            amount_1.append(amount)
+            price = int(products[i]['price'])
+            cost = price * amount
+            cost_1.append(cost)
+        cost_all = sum(cost_1)
+        if products:
+            return render_template("orders.html", products=products, ab=ab, amount=amount_1, cost=cost_1, cost_all=cost_all, user=user[0], order_number=order_number)
+    return render_template('error.html', error=error)
 
 
 @app.route("/product/<int:product_id>/wishes_add/")
@@ -361,19 +387,22 @@ def get_product_wishes_delete(product_id):
 
 @app.route("/product/<int:product_id>")
 def get_product(product_id):
-    product = db.select(f"SELECT * FROM products WHERE product_id = {product_id}")
+    error = 'Авторизуйтесь!'
+    product = db.select(f"SELECT * FROM products WHERE product_id = '{product_id}'")
     users = db.select(f"SELECT user_id FROM users WHERE role = 'admin'")
     admins = []
     for i in range(len(users)):
         admins.append(users[i]['user_id'])
     email_1 = (request.cookies.get('postgres'))
     user = db.select(f"SELECT * FROM users WHERE email = '{email_1}';")
-    user_1 = user[0]['user_id']
-    param = False
-    if user_1 in admins:
-        param = True
-    if len(product):
-        return render_template("product.html", title=product[0]['product_id'], product=product[0], users=users, param=param)
+    if user:
+        user_1 = user[0]['user_id']
+        param = False
+        if user_1 in admins:
+            param = True
+        if len(product):
+            return render_template("product.html", title=product[0]['product_id'], product=product[0], users=users, param=param)
+    return render_template("error.html", error=error)
 
 @app.route("/sets/")
 def sets_list():
@@ -391,87 +420,95 @@ def sets_list():
 def premium_list():
     error = 'Товара данной категории нет'
     category = 'premium'
+    title = 'Премиум'
     products = db.get_category_page('products', category, 'category')
 
-    if len(products)==0:
+    if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("base_products.html", products=products)
+    return render_template("base_products.html", products=products, title=title)
 
 @app.route("/rolls_and_sushi/")
 def rolls_and_sushi_list():
     error = 'Товара данной категории нет'
+    title = 'Роллы и суши'
     category = 'rolls_and_sushi'
     products = db.get_category_page('products', category, 'category')
 
     if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("base_products.html", products=products)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route("/tempura/")
 def tempura_list():
     error = 'Товара данной категории нет'
     category = 'tempura'
+    title = 'Темпура'
     products = db.get_category_page('products', category, 'category')
 
     if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("base_products.html", products=products)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route("/baked/")
 def baked_list():
     error = 'Товара данной категории нет'
     category = 'baked'
+    title = 'Запечённые'
     products = db.get_category_page('products', category, 'category')
 
     if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("base_products.html", products=products)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route("/hot_and_salads/")
 def hot_and_salads_list():
     error = 'Товара данной категории нет'
     category = 'hot_and_salads'
+    title = 'Горячее и салаты'
     products = db.get_category_page('products', category, 'category')
 
     if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("base_products.html", products=products)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route("/sauces/")
 def sauces_list():
     error = 'Товара данной категории нет'
     category = 'sauces'
+    title = 'Соусы'
     products = db.get_category_page('products', category, 'category')
 
     if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("base_products.html", products=products)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route("/drinks_and_desserts/")
 def drinks_and_desserts_list():
     error = 'Товара данной категории нет'
     category = 'drinks_and_desserts'
+    title = 'Напитки и десерты'
     products = db.get_category_page('products', category, 'category')
 
     if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("base_products.html", products=products)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route("/spices/")
 def spices_list():
     error = 'Товара данной категории нет'
     category = 'spices'
+    title = 'Специи'
     products = db.get_category_page('products', category, 'category')
 
     if len(products) == 0:
         return render_template('error.html', error=error)
-    return render_template("base_products.html", products=products)
+    return render_template("base_products.html", products=products, title=title)
 
 
 @app.route('/product_form/', methods=['GET', 'POST'])
@@ -488,7 +525,7 @@ def render_form():
     nutritional_value = request.form.get('nutritional_value')
 
     products = db.insert(
-        f"INSERT INTO products (category, name, gramms, price, img, description, nutritional_value) VALUES ({category}', '{name}', {int(gramms)}, {int(price)}, '{img}', '{description}', '{nutritional_value}');")
+        f"INSERT INTO products (category, name, gramms, price, img, description, nutritional_value) VALUES ('{category}', '{name}', {int(gramms)}, {int(price)}, '{img}', '{description}', '{nutritional_value}');")
 
     response = f'"{name}" успешно добавлен'
     context = {

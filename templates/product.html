@@ -3,10 +3,10 @@
     <div class="product_2">
         <div class="first_n_i">
             <div class="name">
-                <h1>{{ product.name }}</h1>
+                <h3>{{ product.name }}</h3>
             </div>
             <div class="img_pr">
-                <img src="/static/imgs/{{ product.img }}">
+                <img width="265px" height="213px" src="/static/imgs/{{ product.img }}">
             </div>
         </div>
         <div class="product_content">
@@ -40,20 +40,24 @@
                         <p>Корзина</p>
                     </div>
                 </div>
+            </div>
+            <br>
                 {% if param %}
-                    <div class="cart">
-                        <div class="cart_1" onclick="location.href = '{{ url_for("render_form", product_id = product.product_id) }}'">
-                            <div class="lol_p" style="text-align: center">Добавить новый товар</div>
+                    <div class=button_product>
+                        <div class="cart_89">
+                            <div class="cart_1" onclick="location.href = '{{ url_for("render_form", product_id = product.product_id) }}'">
+                                <div class="lol_p" style="text-align: center">Добавить новый товар</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="cart">
-                        <div class="cart_1" onclick="location.href = '{{ url_for("render_form_redactor", product_id = product.product_id) }}'">
-                            <div class="lol_p" style="text-align: center">Редактировать товар</div>
+                        <div class="cart_89">
+                            <div class="cart_1" onclick="location.href = '{{ url_for("render_form_redactor", product_id = product.product_id) }}'">
+                                <div class="lol_p" style="text-align: center">Редактировать товар</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="cart">
-                        <div class="cart_1" onclick="location.href = '{{ url_for("render_form_delete", product_id = product.product_id) }}'">
-                            <div class="lol_p" style="text-align: center">Удалить товар</div>
+                        <div class="cart_89">
+                            <div class="cart_1" onclick="location.href = '{{ url_for("render_form_delete", product_id = product.product_id) }}'">
+                                <div class="lol_p" style="text-align: center">Удалить товар</div>
+                            </div>
                         </div>
                     </div>
                 {% endif %}

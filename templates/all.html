@@ -3,6 +3,20 @@
         <div class="title">
         <h1>{{ title }}</h1>
         </div>
+        <form method="post">
+                <select name="category" class="block1">
+                    <option disabled>Категория</option>
+                    {% for category in categories %}
+                        {% if category == p_category %}
+                            <option value={{category}} selected="selected">{{category}}</option>
+                        {% else%}
+                            <option value={{category}}>{{category}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                    <input type="text" class="block1" placeholder="search ..." name="name" value={{name}}>
+                    <button type="submit" class="block1">Поиск</button>
+            </form>
         <div class="products">
         {% for product in products %}
             <div class="product_1" onclick="location.href = '{{url_for("get_product", product_id=product.product_id)}}'">

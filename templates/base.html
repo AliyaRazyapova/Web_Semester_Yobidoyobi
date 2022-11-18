@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/static/products.css">
-    <link rel="stylesheet" href="/static/main/header_footer.css">
-    <link rel="stylesheet" href="/registration_login.css">
+    <link rel="stylesheet" href="/static/header_footer.css">
+    <link rel="stylesheet" href="/static/registration_login.css">
     <title>{{title}}</title>
 </head>
 <body>
     <div class="header_footer">
-            <div class="logo">
+            <div class="logo" onclick="location.href = '{{ url_for('main_list') }}'">
                 <svg xmlns="http://www.w3.org/2000/svg" width="124" height="39" viewBox="0 0 124 39"
                      fill="none" class="injected-svg" data-src="/franch-static/static/media/logo.54e02c75.svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M27.0451 19.6688C25.3174 32.335 9.42591 24.6282
@@ -204,7 +204,7 @@
                 <div class="catalog_track">
                     <div data-index="0" class="catalog_slide" tabindex="-1" aria-hidden="false" style="outline: none;">
                         <div class="catalog_popular" tabindex="-1" style="width: 100%; display: inline-block;">
-                            <a class="link" draggable="false" href="/main/">Популярное</a>
+                            <a class="link" draggable="false" href="/popular/">Популярное</a>
                         </div>
                     </div>
                     <div data-index="1" class="catalog_slide" tabindex="-1" aria-hidden="true" style="outline: none;">
@@ -256,6 +256,7 @@
             </div>
         </div>
     </div>
+    <br>
     {% block body %}
     {% endblock %}
     </body>

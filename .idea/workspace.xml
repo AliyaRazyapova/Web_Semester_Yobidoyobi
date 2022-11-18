@@ -2,9 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de43a97e-a7d2-4b3d-84fa-a5a760b3d843" name="Changes" comment="done">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/all.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/db_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hello.py" beforeDir="false" afterPath="$PROJECT_DIR$/hello.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/cart.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/imgs/wishes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/imgs/wishes_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/header_footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/header_footer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/products.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/products.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/registration_login.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/registration_login.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base_products.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,20 +62,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "list.type.of.created.stylesheet": "CSS"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Desktop\rep\github\Web_Semester_Yobidoyobi\static" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Web_Semester_Yobidoyobi" type="PythonConfigurationType" factoryName="Python">
       <module name="Web_Semester_Yobidoyobi" />
@@ -95,7 +116,7 @@
       <updated>1668299849726</updated>
       <workItem from="1668299853665" duration="55110000" />
       <workItem from="1668426949288" duration="100660000" />
-      <workItem from="1668593539810" duration="2376000" />
+      <workItem from="1668593539810" duration="14550000" />
     </task>
     <task id="LOCAL-00001" summary="commit -am &quot;modified registration form&quot;">
       <created>1668305355537</created>
@@ -251,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668593305279</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="done">
+      <created>1668596176440</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1668596176440</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

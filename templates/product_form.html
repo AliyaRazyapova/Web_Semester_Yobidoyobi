@@ -1,21 +1,67 @@
+{% extends 'base.html' %}
 {% block body %}
     <br>
-    <div class="back" onclick="location.href = '{{ url_for("main_list") }}'">
-        <p>Все фильмы</p>
+    <div style="display: flex; justify-content: center">
+        <h1>Редактирование товара</h1>
     </div>
-    <div class="form-block">
-        <form action="" method="post">
-            <label>Категория</label><br><input type="text" name="category"><br>
-            <label>Название</label><br><input type="text" name="name"><br>
-            <label>Граммовка</label><br><input type="text" name="gramms"><br>
-            <label>Цена</label><br><input type="text" name="price"><br>
-            <label>Картинка</label><br><input type="text" name="img"><br>
-            <label>Описание</label><br><input type="text" name="description"><br>
-            <label>Пищевая ценность на 100 гр.</label><br><input type="text" name="nutritional_value"><br>
-            <button>ДОБАВИТЬ</button>
-        </form>
-    </div>
-    {% if response %}
-        <p>{{ response }}</p>
-    {% endif %}
+    <form method="post", class="post_23">
+        <div class="all">
+            <div class="field">
+                <label class="field_123">
+                    <b>Категория</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите название" name="category">
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Название</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите название" name="name">
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Граммовка</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите граммовку" name="gramms">
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Цена</b>
+                </label>
+                <br>
+                <input type="text" class="text_1" placeholder="введите цену" name="price">
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <option disabled>Категория</option>
+                </label>
+                <input type="text" class="text_1" placeholder="введите путь к картинке" name="img">
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Описание</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите описание" name="description">
+            </div>
+            <br>
+            <div class="field">
+                <label class="field_123">
+                    <b>Пищевая ценность на 100 гр.</b>
+                </label>
+                <input type="text" class="text_1" placeholder="введите пищевую ценность" name="nutritional_value">
+            </div>
+            <br>
+            <button type="submit" class="pro_redactor_button" style="margin-left: 9%">
+                Добавить товар
+            </button>
+            {% if response %}#}
+             <p>{{ response }}</p>
+            {% endif %}
+        </div>
+    </form>
 {% endblock %}

@@ -7,7 +7,7 @@
         {% for product in products %}
             <div class="product" onclick="location.href = '{{url_for("get_product", product_id=product.product_id)}}'">
                 <div class="img">
-                    <img src="/static/imgs/{{ product.img }}">
+                    <img width="265px" height="213px" src="/static/imgs/{{ product.img }}">
                 </div>
                 <br>
                 <div class="name">{{product.name}}</div>

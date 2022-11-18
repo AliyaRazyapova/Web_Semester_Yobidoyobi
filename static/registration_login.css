@@ -30,3 +30,12 @@
     flex-direction: row;
     float: right;
 }
+
+*{
+    font-family: "Museo Sans Cyrl 700",sans-serif;
+}
+
+.header_footer{
+    display: flex;
+    flex-direction: row;
+}
