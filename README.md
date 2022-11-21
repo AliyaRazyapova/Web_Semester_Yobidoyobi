@@ -1,3 +1,3 @@
-Web Semester Yobidoyobi
+# Web Semester Yobidoyobi
 
 python hello.py runserver
